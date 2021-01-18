@@ -1,6 +1,8 @@
 To do - Jan 17 2021
 =======
-1. tab from total cloth qty to Notes
-2. Print directly in the message box that shows the user of new receipt id
-3. update
-4. delete
+DONE  1. tab order
+DONR  2. Print directly in the message box that shows the user of new receipt id
+	  3. update
+DONE  4. delete
+DONE  5. valid record goes in db even if qty not given in invalid records. All records should not be saved
+DONE  6. Qty text boxes - only numberic allowed in form save new cutting slip
