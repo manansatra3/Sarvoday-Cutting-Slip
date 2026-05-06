@@ -83,7 +83,7 @@
 <div class="container">
     <form method="POST">
         <label>Slip No</label>
-        <input name="slip_no" value="{{slip_no}}" readonly>   
+        <input name="slip_no" id="slipNoInput" readonly>   
 
         <label>Date</label>
         <input type="date" name="date" id="date">
@@ -98,7 +98,7 @@
         </select>
 
         <label>Party Address</label>
-        <input type="text" id="address" readonly>
+        <input type="text" id="address" name="address" readonly>
               
         <label>Cloth</label>
         <select id="cloth" name="cloth">
@@ -181,9 +181,11 @@
             </button>
 
         </div>
+        <input type="hidden" name="total_qty" id="hiddenTotalQty">
+        <input type="hidden" name="total_meter" id="hiddenTotalMeter">
     </form>
     
-    <!-- 👇 PASTE HERE -->
+    <!-- PRINT AREA -->
     <div id="printArea" style="display:none;">
         <div style="text-align:center; margin-bottom:10px;">
             <h2 style="margin:0;">SARVODAY STORES</h2>
@@ -269,11 +271,21 @@
     </div>
 
     <div class="history">
-           <h3>History</h3>
+        <h3>History</h3>
 
         {% for h in history %}
             <div class="card">
-                {{h.party}} | {{h.item}} | Qty: {{h.qty}}
+
+                <b>{{h.party}}</b><br>
+
+                {{h.item}} | {{h.date}}
+
+                <br><br>
+
+                <button type="button" onclick="viewSlip('{{ loop.index0 }}')">
+                    View
+                </button>
+
             </div>
         {% endfor %}
     </div>
@@ -312,25 +324,7 @@
         `;
     }
 
-    function calculateTotal() {
-        let qtys = document.getElementsByName("qty[]");
-        let meters = document.getElementsByName("meter[]");
-
-        let totalQty = 0;
-        let totalMeter = 0;
-
-        for (let i = 0; i < qtys.length; i++) {
-            totalQty += parseFloat(qtys[i].value) || 0;
-            totalMeter += parseFloat(meters[i].value) || 0;
-        }
-
-        document.getElementById("p_total_qty").innerHTML =
-        "Total Qty: " + totalQty;
-
-        document.getElementById("p_total_meter").innerHTML =
-        "Total Meter: " + totalMeter.toFixed(2);
-    }
-    
+        
     function calculateTotal() {
         let qtys = document.getElementsByName("qty[]");
         let meters = document.getElementsByName("meter[]");
@@ -345,12 +339,16 @@
 
         document.getElementById("totalQty").innerText = totalQty;
         document.getElementById("totalMeter").innerText = totalMeter.toFixed(2);
+
+        document.getElementById("hiddenTotalQty").value = totalQty;
+
+        document.getElementById("hiddenTotalMeter").value = totalMeter.toFixed(2);
     }
 
     function printSlip() {
 
         document.getElementById("p_slip").innerText =
-            document.querySelector("input[name='slip_no']").value;
+            document.getElementById("slipNoInput").value;
 
         document.getElementById("p_date").innerText =
             document.querySelector("input[name='date']").value;
@@ -602,6 +600,9 @@
         let today = new Date().toISOString().split('T')[0];
 
         document.getElementById("date").value = today;
+        
+        // Set the slip number
+        document.getElementById("slipNoInput").value = {{slip_no}};
 
         updateSizes();
 
@@ -609,7 +610,7 @@
         document.getElementById("address").value = "";
 };
 
-    function resetFormData() {
+    function clearFormData() {
 
         document.querySelector("form").reset();
 
@@ -628,6 +629,9 @@
 
         let today = new Date().toISOString().split('T')[0];
         document.getElementById("date").value = today;
+        
+        // Reset slip number
+        document.getElementById("slipNoInput").value = {{slip_no}};
     }
 
     function validateForm() {
@@ -680,36 +684,100 @@
 
         return valid;
     }
+    
+    let historyData = {{ history | tojson }};
 
-    function clearFormData() {
+    function viewSlip(index){
 
-        document.querySelector("form").reset();
+        let slip = historyData[index];
+        
+        // Calculate slip_no based on position (latest = highest number)
+        let slipNo = historyData.length - index;
 
-        document.getElementById("address").value = "";
+        document.getElementById("popupContent").innerHTML = `
 
-        document.getElementById("totalQty").innerText = "0";
-        document.getElementById("totalMeter").innerText = "0";
+        <h3>Slip No : ${slipNo}</h3>
 
-        let table = document.getElementById("sizeTable");
+        <p><b>Date:</b> ${slip.date || ""}</p>
 
-        // remove extra rows
-        while (table.rows.length > 2) {
-            table.deleteRow(2);
-        }
+        <p><b>Party:</b> ${slip.party || ""}</p>
 
-        // clear first row
-        let firstSize = document.getElementsByName("size[]")[0];
-        let firstQty = document.getElementsByName("qty[]")[0];
-        let firstMeter = document.getElementsByName("meter[]")[0];
+        <p><b>Address:</b> ${slip.address || ""}</p>
 
-        firstSize.selectedIndex = 0;
-        firstQty.value = "";
-        firstMeter.value = "";
+        <p><b>Cloth:</b> ${slip.cloth || ""}</p>
 
-        let today = new Date().toISOString().split('T')[0];
-        document.getElementById("date").value = today;
+        <p><b>School:</b> ${slip.school || ""}</p>
+
+        <p><b>Item:</b> ${slip.item || ""}</p>
+
+        <hr>
+
+        <div style="display:flex; font-weight:bold; margin-bottom:5px;">
+            <div style="width:33%;">Size</div>
+            <div style="width:33%; text-align:center;">Qty</div>
+            <div style="width:33%; text-align:right;">Mtr</div>
+        </div>
+
+        ${(slip.sizes || []).map((size, idx) => `
+
+        <div style="display:flex; margin-bottom:4px;">
+
+            <div style="width:33%;">
+                ${size}
+            </div>
+
+            <div style="width:33%; text-align:center;">
+                ${(slip.qtys || [])[idx] || ""}
+            </div>
+
+            <div style="width:33%; text-align:right;">
+                ${parseFloat((slip.meters || [])[idx] || 0).toFixed(2)}
+            </div>
+
+        </div>
+
+        `).join("")}
+
+        <hr>
+
+        <p>
+        <b>Total Qty:</b>
+        ${slip.total_qty || 0}
+        </p>
+
+        <p>
+        <b>Total Meter:</b>
+        ${slip.total_meter || 0}
+        </p>
+
+        <button type="button" onclick="printOldSlip(${index})">
+            Print
+        </button>
+        `;
+
+        document.getElementById("historyPopup").style.display = "block";
     }
 
+    function closePopup(){
+        document.getElementById("historyPopup").style.display = "none";
+}
 </script>
+    <div id="historyPopup" 
+        style="display:none;
+                position:fixed;
+                top:10%;
+                left:50%;
+                transform:translateX(-50%);
+                background:white;
+                padding:20px;
+                width:300px;
+                border-radius:10px;
+                box-shadow:0 0 10px rgba(0,0,0,0.4);
+                z-index:9999;">
+
+        <div id="popupContent"></div>
+
+        <button onclick="closePopup()">Close</button>
+    </div>
 </body>
 </html>

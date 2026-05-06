@@ -127,10 +127,27 @@ def load_size_map():
 def home():
 
     if request.method == "POST":
+        slip_no = request.form.get("slip_no")
+        
+        # Ensure slip_no is stored properly
+        try:
+            slip_no = int(slip_no) if slip_no else get_next_slip_no()
+        except:
+            slip_no = get_next_slip_no()
+        
         data = {
+            "slip_no": str(slip_no),
             "date": request.form.get("date"),
             "party": request.form.get("party"),
+            "address": request.form.get("address"),
+            "cloth": request.form.get("cloth"),
+            "school": request.form.get("school"),
             "item": request.form.get("item"),
+            "sizes": request.form.getlist("size[]"),
+            "qtys": request.form.getlist("qty[]"),
+            "meters": request.form.getlist("meter[]"),
+            "total_qty": request.form.get("total_qty"),
+            "total_meter": request.form.get("total_meter")
         }
 
         save_history(data)
@@ -138,6 +155,9 @@ def home():
         return redirect("/")
 
     history = load_history()
+    
+    # Reverse for display
+    history_display = list(reversed(history))
 
     party_list = load_party_data()
 
@@ -151,7 +171,7 @@ def home():
 
     return render_template(
         "index.html",
-        history=history,
+        history=history_display,
         party_list=party_list,
         item_list=item_list,
         slip_no=slip_no,
