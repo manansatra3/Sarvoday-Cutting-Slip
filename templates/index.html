@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cutting Slip</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f0eb;
+            margin: 0;
+        }
+
+        .header {
+            background: #2c2c2c;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            width: 400px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        label {
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 8px;
+            margin: 5px 0 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            background: #2980b9;
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 5px;
+        }
+
+        button:hover {
+            background: #1f6391;
+        }
+
+        .history {
+            margin-top: 20px;
+        }
+
+        .card {
+            background: #fdf6f0;
+            padding: 8px;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+
+        #sizeTable input,
+        #sizeTable select {
+            margin: 0;
+        }    
+    </style>
+</head>
+<body>
+
+<div class="header">
+    ✂ SARVODAY STORES - Cutting Slip
+</div>
+
+<div class="container">
+    <form method="POST">
+        <label>Slip No</label>
+        <input name="slip_no" value="{{slip_no}}" readonly>   
+
+        <label>Date</label>
+        <input type="date" name="date" id="date">
+
+        <label>Party</label>
+        <select name="party">
+            <option value="">Select Party</option>
+
+            {% for p in party_list %}
+                <option value="{{p}}">{{p}}</option>
+            {% endfor %}
+        </select>
+
+        <label>Party Address</label>
+        <input type="text" id="address" readonly>
+              
+        <label>Cloth</label>
+        <select id="cloth" name="cloth">
+            <option value="">Select Cloth</option>
+
+            {% for c in cloth_list %}
+                <option value="{{c}}">{{c}}</option>
+            {% endfor %}
+        </select>
+
+        <label>School Name</label>
+        <select id="school" name="school">
+            <option value="">Select School</option>
+
+            {% for s in school_list %}
+                <option value="{{s}}">{{s}}</option>
+            {% endfor %}
+        </select>
+          
+        <label>Item</label>
+        <select name="item">
+            <option value="">Select Item</option>
+
+            {% for i in item_list %}
+                <option value="{{i}}">{{i}}</option>
+            {% endfor %}
+        </select>
+        
+        <table id="sizeTable" style="width:100%">
+            <tr>
+                <th class="size-col">Size</th>
+
+                <th class="qty-col">
+                    Qnty
+                </th>
+
+                <th class="mtr-col">
+                    Mtr
+                </th>
+            </tr>
+
+            <tr>
+                <td>
+                <select name="size[]">
+                    <option value="">Select</option>
+                </select>
+                </td>
+                <td><input name="qty[]" oninput="calculateTotal()"></td>
+                <td><input name="meter[]" oninput="calculateTotal()"></td>
+            </tr>
+        </table>
+
+        <div style="margin-top:10px;">
+            <b>Total Qty:</b> <span id="totalQty">0</span><br>
+            <b>Total Meter:</b> <span id="totalMeter">0</span>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;">
+
+            <button type="button"
+                    onclick="addRow()"
+                    style="background:#27ae60;">
+                + Add Row
+            </button>
+
+            <button type="button"
+                    onclick="clearFormData()"
+                    style="background:#e67e22;">
+                🆕 New Slip
+            </button>
+
+            <button type="button"
+                    onclick="if(validateForm()) printSlip()"
+                    style="background:#8e44ad;">
+                🖨️ Print Slip
+            </button>
+
+            <button type="submit"
+                    onclick="return validateForm()"
+                    style="background:#2980b9;">
+                💾 Save Slip
+            </button>
+
+        </div>
+    </form>
+    
+    <!-- 👇 PASTE HERE -->
+    <div id="printArea" style="display:none;">
+        <div style="text-align:center; margin-bottom:10px;">
+            <h2 style="margin:0;">SARVODAY STORES</h2>
+
+            <h3 style="margin:0;">
+                CUTTING SLIP
+            </h3>
+        </div>
+        <table class="info-table"
+                style="width:100%; margin-bottom:10px; border:none;">
+
+            <tr>
+                <td class="label">Slip No</td>
+                <td class="colon">:</td>
+                <td id="p_slip"></td>
+            </tr>
+
+            <tr>
+                <td class="label">Date</td>
+                <td class="colon">:</td>
+                <td id="p_date"></td>
+            </tr>
+
+            <tr>
+                <td class="label">Party</td>
+                <td class="colon">:</td>
+                <td id="p_party"></td>
+            </tr>
+
+            <tr>
+                <td class="label">Address</td>
+                <td class="colon">:</td>
+                <td id="p_address"></td>
+            </tr>
+
+            <tr>
+                <td class="label">Cloth</td>
+                <td class="colon">:</td>
+                <td id="p_cloth"></td>
+            </tr>
+
+            <tr>
+                <td class="label">Item</td>
+                <td class="colon">:</td>
+                <td id="p_item"></td>
+            </tr>
+
+        </table>
+
+        <hr>
+
+        <table class="size-table"
+                style="width:100%; table-layout:fixed;">
+            <thead>
+                <tr>
+                    <th>Size</th>
+                    <th>Qnty</th>
+                    <th>Mtr</th>
+                </tr>
+            </thead>
+            <tbody id="p_table"></tbody>
+        </table>
+
+        <hr>
+
+        <table style="width:100%; margin-top:10px;">
+        <tr>
+
+        <td style="width:40%;"></td>
+
+        <td style="width:25%; text-align:right; padding-right:12px; white-space:nowrap;">
+        <b id="p_total_qty"></b>
+        </td>
+
+        <td style="width:35%; text-align:right; padding-right:6px; white-space:nowrap;">
+        <b id="p_total_meter"></b>
+        </td>
+
+        </tr>
+        </table>
+
+        <p style="text-align:center;">--- Thank You ---</p>
+    </div>
+
+    <div class="history">
+           <h3>History</h3>
+
+        {% for h in history %}
+            <div class="card">
+                {{h.party}} | {{h.item}} | Qty: {{h.qty}}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+    <script>
+    function addRow() {
+
+        let item = document.querySelector("select[name='item']").value;
+
+        let sizes = sizeMap[item] || [];
+
+        let options = "<option value=''>Select</option>";
+
+        sizes.forEach(size => {
+            options += `<option>${size}</option>`;
+        });
+
+        let table = document.getElementById("sizeTable");
+
+        let row = table.insertRow();
+
+        row.innerHTML = `
+            <td>
+                <select name="size[]">
+                    ${options}
+                </select>
+            </td>
+
+            <td>
+                <input name="qty[]" oninput="calculateTotal()">
+            </td>
+
+            <td>
+                <input name="meter[]" oninput="calculateTotal()">
+            </td>
+        `;
+    }
+
+    function calculateTotal() {
+        let qtys = document.getElementsByName("qty[]");
+        let meters = document.getElementsByName("meter[]");
+
+        let totalQty = 0;
+        let totalMeter = 0;
+
+        for (let i = 0; i < qtys.length; i++) {
+            totalQty += parseFloat(qtys[i].value) || 0;
+            totalMeter += parseFloat(meters[i].value) || 0;
+        }
+
+        document.getElementById("p_total_qty").innerHTML =
+        "Total Qty: " + totalQty;
+
+        document.getElementById("p_total_meter").innerHTML =
+        "Total Meter: " + totalMeter.toFixed(2);
+    }
+    
+    function calculateTotal() {
+        let qtys = document.getElementsByName("qty[]");
+        let meters = document.getElementsByName("meter[]");
+
+        let totalQty = 0;
+        let totalMeter = 0;
+
+        for (let i = 0; i < qtys.length; i++) {
+            totalQty += parseFloat(qtys[i].value) || 0;
+            totalMeter += parseFloat(meters[i].value) || 0;
+        }
+
+        document.getElementById("totalQty").innerText = totalQty;
+        document.getElementById("totalMeter").innerText = totalMeter.toFixed(2);
+    }
+
+    function printSlip() {
+
+        document.getElementById("p_slip").innerText =
+            document.querySelector("input[name='slip_no']").value;
+
+        document.getElementById("p_date").innerText =
+            document.querySelector("input[name='date']").value;
+
+        document.getElementById("p_party").innerText =
+            document.querySelector("select[name='party']").value;
+
+        document.getElementById("p_address").innerText =
+            document.getElementById("address").value;
+
+        document.getElementById("p_cloth").innerText =
+            document.getElementById("cloth").value;
+
+        document.getElementById("p_item").innerText =
+            document.querySelector("select[name='item']").value;
+
+        let sizes = document.getElementsByName("size[]");
+        let qtys = document.getElementsByName("qty[]");
+        let meters = document.getElementsByName("meter[]");
+
+        let tableHTML = "";
+
+        for (let i = 0; i < sizes.length; i++) {
+            if (sizes[i].value || qtys[i].value || meters[i].value) {
+                tableHTML += `
+                    <tr>
+                        <td class="size-col">${sizes[i].value}</td>
+
+                        <td class="qty-col">
+                            ${qtys[i].value}
+                        </td>
+
+                        <td class="mtr-col">
+                            ${meters[i].value}
+                        </td>
+                    </tr>
+                    `;
+            }
+        }
+
+        document.getElementById("p_table").innerHTML = tableHTML;
+
+        document.getElementById("p_total_qty").innerText =
+            "Total Qty: " + document.getElementById("totalQty").innerText;
+
+        document.getElementById("p_total_meter").innerText =
+            "Total Meter: " + document.getElementById("totalMeter").innerText;
+
+        let content = document.getElementById("printArea").innerHTML;
+
+        let win = window.open("", "", "width=400,height=600");
+
+        win.document.write(`
+            <html>
+            <head>
+                <title>Print</title>
+                <style>
+                    body {
+                        font-family: monospace;
+                        p {
+                            white-space: pre;
+                        }
+                        font-size: 11px;
+                        width: 260px;
+                        margin: auto;
+                    }
+
+                    h2, h3 {
+                        text-align: center;
+                        margin: 2px 0;
+                    }
+
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+
+                    th, td {
+                        border-bottom: 1px dashed black;
+                        padding: 3px;
+                        text-align: center;
+                    }
+
+                    p {
+                        margin: 3px 0;
+                    }
+                        width: 250px;
+                        margin: auto;
+                        word-wrap: break-word;
+                    }
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+
+                    th {
+                        border-bottom: 1px dashed black;
+                        padding: 4px;                       
+                    }
+
+                    td {
+                        padding: 2px 0;
+                        border: none;
+                        text-align: left;
+                    }
+                    th, td { padding: 4px; text-align: center; }
+
+                    table {
+                        width: 100%;
+                        border-collapse: collapse;
+                    }
+
+                    .label {
+                        width: 70px;
+                        font-weight: bold;
+                        text-align: left;
+                    }
+
+                    .colon {
+                        width: 10px;
+                        text-align: center;
+                    }
+                    
+                    .info-table td {
+                        text-align: left;
+                    }
+
+                    .size-table {
+                        width: 100%;
+                        table-layout: fixed;
+                        border-collapse: collapse;
+                    }
+
+                    .size-table th {
+                        border-bottom: 1px dashed black;
+                        padding: 4px;
+                        font-weight: bold;
+                    }
+
+                    .size-table td {
+                        padding: 2px 4px;
+                    }
+
+                    .size-table th:nth-child(1),
+                    .size-table td:nth-child(1) {
+                        width: 40%;
+                        text-align: center;
+                    }
+
+                    .size-table th:nth-child(2),
+                    .size-table td:nth-child(2) {
+                        width: 25%;
+                        text-align: right;
+                        padding-right: 12px;
+                    }
+
+                    .size-table th:nth-child(3),
+                    .size-table td:nth-child(3) {
+                        width: 35%;
+                        text-align: right;
+                        padding-right: 6px;
+                    }
+
+                    .size-col {
+                        width: 80px;
+                        text-align: center;
+                    }
+
+                    .qty-col,
+                    .qty-col th,
+                    .qty-col td {
+                        width: 70px;
+                        text-align: right !important;
+                        padding-right: 10px;
+                    }
+
+                    .mtr-col,
+                    .mtr-col th,
+                    .mtr-col td {
+                        width: 90px;
+                        text-align: right !important;
+                        padding-right: 5px;
+                    }
+
+                        .size-col {
+                            text-align: center;
+                        }
+
+                    td {
+                        padding: 2px 0;
+                        border: none;
+                        text-align: left;
+                    }
+                    .size-col {
+                        text-align: center;
+                    }
+
+                    .qty-col,
+                    .mtr-col {
+                        text-align: right !important;
+                        padding-right: 8px;
+                    }
+                </style>
+            </head>
+            <body>${content}</body>
+            </html>
+        `);
+
+        win.document.close();
+        win.print();
+
+        setTimeout(() => {
+            location.reload();
+        }, 500);
+    }
+    
+    let sizeMap = {{ size_map | tojson }};
+        
+    function updateSizes() {
+        let item = document.querySelector("select[name='item']").value;
+        let sizes = sizeMap[item] || [];
+
+        let selects = document.getElementsByName("size[]");
+
+        for (let s of selects) {
+            s.innerHTML = "<option value=''>Select</option>";
+            sizes.forEach(size => {
+                s.innerHTML += `<option>${size}</option>`;
+            });
+        }
+    }
+
+    document.querySelector("select[name='item']")
+        .addEventListener("change", updateSizes);
+    
+    let partyData = {{ party_data | tojson }};
+
+    document.querySelector("select[name='party']")
+    .addEventListener("change", function () {
+
+        let party = this.value;
+
+        document.getElementById("address").value =
+            partyData[party] || "";
+    });
+
+    window.onload = function () {
+
+        let today = new Date().toISOString().split('T')[0];
+
+        document.getElementById("date").value = today;
+
+        updateSizes();
+
+        // auto load first party
+        document.getElementById("address").value = "";
+};
+
+    function resetFormData() {
+
+        document.querySelector("form").reset();
+
+        document.getElementById("address").value = "";
+
+        document.getElementById("totalQty").innerText = "0";
+        document.getElementById("totalMeter").innerText = "0";
+
+        let table = document.getElementById("sizeTable");
+
+        while (table.rows.length > 2) {
+            table.deleteRow(2);
+        }
+
+        updateSizes();
+
+        let today = new Date().toISOString().split('T')[0];
+        document.getElementById("date").value = today;
+    }
+
+    function validateForm() {
+
+        let party = document.querySelector("select[name='party']");
+        let item = document.querySelector("select[name='item']");
+        let sizes = document.getElementsByName("size[]");
+        let qtys = document.getElementsByName("qty[]");
+
+        let valid = true;
+
+        // reset borders
+        party.style.border = "";
+        item.style.border = "";
+
+        sizes.forEach(s => s.style.border = "");
+        qtys.forEach(q => q.style.border = "");
+
+        // Party validation
+        if (party.value === "") {
+            party.style.border = "2px solid red";
+            party.focus();
+            valid = false;
+        }
+
+        // Item validation
+        if (item.value === "") {
+            item.style.border = "2px solid red";
+            item.focus();
+            valid = false;
+        }
+
+        // Size + Qty validation
+        for (let i = 0; i < sizes.length; i++) {
+
+            if (sizes[i].value === "") {
+                sizes[i].style.border = "2px solid red";
+                valid = false;
+            }
+
+            if (qtys[i].value === "") {
+                qtys[i].style.border = "2px solid red";
+                valid = false;
+            }
+        }
+
+        if (!valid) {
+            alert("Please fill required fields");
+        }
+
+        return valid;
+    }
+
+    function clearFormData() {
+
+        document.querySelector("form").reset();
+
+        document.getElementById("address").value = "";
+
+        document.getElementById("totalQty").innerText = "0";
+        document.getElementById("totalMeter").innerText = "0";
+
+        let table = document.getElementById("sizeTable");
+
+        // remove extra rows
+        while (table.rows.length > 2) {
+            table.deleteRow(2);
+        }
+
+        // clear first row
+        let firstSize = document.getElementsByName("size[]")[0];
+        let firstQty = document.getElementsByName("qty[]")[0];
+        let firstMeter = document.getElementsByName("meter[]")[0];
+
+        firstSize.selectedIndex = 0;
+        firstQty.value = "";
+        firstMeter.value = "";
+
+        let today = new Date().toISOString().split('T')[0];
+        document.getElementById("date").value = today;
+    }
+
+</script>
+</body>
+</html>

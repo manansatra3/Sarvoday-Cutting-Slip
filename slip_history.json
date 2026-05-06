@@ -1,0 +1,427 @@
+[
+  {
+    "date": "04-05-2026",
+    "slip": "001",
+    "party": "ARIHANT TRADERS",
+    "party_addr": "MALAD",
+    "cloth": "COTTON",
+    "school": "XYZ SCHOOL",
+    "item": "FROCK",
+    "sizes": [
+      {
+        "size": "26",
+        "qty": "10",
+        "meter": "10.00"
+      },
+      {
+        "size": "28",
+        "qty": "15",
+        "meter": "25.25"
+      },
+      {
+        "size": "30",
+        "qty": "10",
+        "meter": "11.00"
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "",
+    "saved_at": "04-05-2026 14:26"
+  },
+  {
+    "date": "04-05-2026",
+    "slip": "002",
+    "party": "BHARTI UNIFORM",
+    "party_addr": "ANDHERI",
+    "cloth": "LINEN",
+    "school": "ABC SCHOOL",
+    "item": "T-SHIRT",
+    "sizes": [
+      {
+        "size": "28",
+        "qty": "10",
+        "meter": "20.25"
+      },
+      {
+        "size": "30",
+        "qty": "12",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "",
+    "saved_at": "04-05-2026 14:29"
+  },
+  {
+    "date": "04-05-2026",
+    "slip": "003",
+    "party": "CHANSAR HOSIERY",
+    "party_addr": "ANDHERI",
+    "cloth": "SILK",
+    "school": "DPS",
+    "item": "PINA FROCK",
+    "sizes": [
+      {
+        "size": "28",
+        "qty": "10",
+        "meter": "10.25"
+      },
+      {
+        "size": "30",
+        "qty": "5",
+        "meter": "11.50"
+      },
+      {
+        "size": "34",
+        "qty": "2",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "long belt",
+    "saved_at": "04-05-2026 15:50",
+    "status": "Cancelled"
+  },
+  {
+    "date": "04-05-2026",
+    "slip": "004",
+    "party": "SOHIL GARMENTS",
+    "party_addr": "KANDIVALI",
+    "cloth": "COTTON",
+    "school": "DAV",
+    "item": "HALF PANT",
+    "sizes": [
+      {
+        "size": "14",
+        "qty": "10",
+        "meter": "111.00"
+      },
+      {
+        "size": "15",
+        "qty": "5",
+        "meter": "10.00"
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "",
+    "saved_at": "04-05-2026 15:57"
+  },
+  {
+    "date": "04-05-2026",
+    "slip": "005",
+    "party": "FOOTMATE",
+    "party_addr": "AHMEDABAD",
+    "cloth": "COTTON",
+    "school": "ABC SCHOOL",
+    "item": "SKIRT",
+    "sizes": [
+      {
+        "size": "18 X 20",
+        "qty": "1",
+        "meter": ""
+      },
+      {
+        "size": "20 X 22",
+        "qty": "1",
+        "meter": ""
+      },
+      {
+        "size": "20 X 22",
+        "qty": "1",
+        "meter": ""
+      },
+      {
+        "size": "22 X 24",
+        "qty": "1",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "",
+    "status": "Cancelled",
+    "saved_at": "04-05-2026 17:48"
+  },
+  {
+    "date": "04-05-2026",
+    "slip": "004",
+    "party": "SOHIL GARMENTS",
+    "party_addr": "KANDIVALI",
+    "cloth": "COTTON",
+    "school": "DAV",
+    "item": "HALF PANT",
+    "sizes": [
+      {
+        "size": "14",
+        "qty": "10",
+        "meter": "111.00"
+      },
+      {
+        "size": "15",
+        "qty": "5",
+        "meter": "10.00"
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "",
+    "status": "Active",
+    "saved_at": "04-05-2026 18:36"
+  },
+  {
+    "date": "04-05-2026",
+    "slip": "006",
+    "party": "GENIUS KNITWEAR",
+    "party_addr": "MALAD",
+    "cloth": "COTTON",
+    "school": "DHANAMAL",
+    "item": "SHIRT",
+    "sizes": [
+      {
+        "size": "5",
+        "qty": "5",
+        "meter": "12.50"
+      },
+      {
+        "size": "6",
+        "qty": "5",
+        "meter": "11.00"
+      },
+      {
+        "size": "7",
+        "qty": "2",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "",
+    "status": "Active",
+    "saved_at": "04-05-2026 19:31"
+  },
+  {
+    "date": "04-05-2026",
+    "slip": "001",
+    "party": "ARIHANT TRADERS",
+    "party_addr": "MALAD",
+    "cloth": "N.BLUE COTTON SUITING",
+    "school": "JOSEPH - MLD",
+    "item": "FROCK",
+    "sizes": [
+      {
+        "size": "26",
+        "qty": "10",
+        "meter": "10.00"
+      },
+      {
+        "size": "28",
+        "qty": "15",
+        "meter": "25.25"
+      },
+      {
+        "size": "30",
+        "qty": "10",
+        "meter": "11.00"
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "",
+    "status": "Active",
+    "saved_at": "04-05-2026 18:46"
+  },
+  {
+    "date": "04-05-2026",
+    "slip": "004",
+    "party": "SOHIL GARMENTS",
+    "party_addr": "KANDIVALI",
+    "cloth": "PHONE COTTON SUITING",
+    "school": "SANSKAR",
+    "item": "HALF PANT",
+    "sizes": [
+      {
+        "size": "14",
+        "qty": "10",
+        "meter": "111.00"
+      },
+      {
+        "size": "15",
+        "qty": "5",
+        "meter": "10.00"
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "long belt",
+    "status": "Active",
+    "saved_at": "04-05-2026 18:47"
+  },
+  {
+    "date": "05-05-2026",
+    "slip": "007",
+    "party": "JACKLINE",
+    "party_addr": "CHEMBUR",
+    "cloth": "D.GRAY S.KUMAR SUITING",
+    "school": "S V I S",
+    "item": "SHIRT",
+    "sizes": [
+      {
+        "size": "7",
+        "qty": "10",
+        "meter": "10.50"
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      },
+      {
+        "size": "",
+        "qty": "",
+        "meter": ""
+      }
+    ],
+    "remark": "",
+    "status": "Active",
+    "saved_at": "05-05-2026 14:56"
+  },
+  {
+    "date": "",
+    "party": "ARIHANT TRADERS",
+    "item": "FULL PANT",
+    "qty": null,
+    "meter": null,
+    "saved_at": "05-05-2026 17:52"
+  },
+  {
+    "date": "2026-05-06",
+    "party": "SOHIL GARMENTS",
+    "item": "FULL PANT"
+  },
+  {
+    "date": "2026-05-06",
+    "party": "HARESHBHAI",
+    "item": "FULL PANT"
+  },
+  {
+    "date": "2026-05-06",
+    "party": "GENIUS KNITWEAR",
+    "item": "SKIRT"
+  },
+  {
+    "date": "2026-05-06",
+    "party": "ATULBHAI",
+    "item": "T-SHIRT"
+  },
+  {
+    "date": "2026-05-06",
+    "party": "BHARTI UNIFORM",
+    "item": "FROCK"
+  },
+  {
+    "date": "2026-05-06",
+    "party": "ARIHANT TRADERS",
+    "item": "BABA SUIT HALF PANT"
+  }
+]
