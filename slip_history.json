@@ -44,5 +44,28 @@
     ],
     "total_qty": "12",
     "total_meter": "10.00"
+  },
+  {
+    "slip_no": "3",
+    "date": "07-05-2026",
+    "party": "BHARTI UNIFORM",
+    "address": "ANDHERI",
+    "cloth": "L.BLUE SUITING",
+    "school": "JOSEPH - MLD",
+    "item": "PINA FROCK",
+    "sizes": [
+      "38",
+      "40"
+    ],
+    "qtys": [
+      "10",
+      "5"
+    ],
+    "meters": [
+      "10.25",
+      "15"
+    ],
+    "total_qty": "15",
+    "total_meter": "25.25"
   }
 ]

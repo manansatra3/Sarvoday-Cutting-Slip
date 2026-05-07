@@ -137,7 +137,10 @@ def home():
         
         data = {
             "slip_no": str(slip_no),
-            "date": request.form.get("date"),
+            "date": datetime.datetime.strptime(
+                request.form.get("date"),
+                "%Y-%m-%d"
+            ).strftime("%d-%m-%Y"),
             "party": request.form.get("party"),
             "address": request.form.get("address"),
             "cloth": request.form.get("cloth"),

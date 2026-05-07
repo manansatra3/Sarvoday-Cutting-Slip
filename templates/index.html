@@ -270,15 +270,48 @@
         <p style="text-align:center;">--- Thank You ---</p>
     </div>
 
-    <div class="history">
+    <div class="history"
+        style="
+            position:fixed;
+            right:10px;
+            top:80px;
+            width:320px;
+            height:85vh;
+            overflow:auto;
+            background:white;
+            padding:10px;
+            border-radius:10px;
+            box-shadow:0 0 10px rgba(0,0,0,0.2);
+        ">
+
         <h3>History</h3>
 
         {% for h in history %}
             <div class="card">
 
-                <b>{{h.party}}</b><br>
+                <table style="width:100%; font-size:12px;">
+                    <tr>
+                        <td><b>Date</b></td>
+                        <td><b>Slip</b></td>
+                    </tr>
 
-                {{h.item}} | {{h.date}}
+                    <tr>
+                        <td>{{h.date}}</td>
+                        <td>{{h.slip_no}}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            <b>{{h.party}}</b>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="2">
+                            {{h.school}}
+                        </td>
+                    </tr>
+                </table>
 
                 <br><br>
 
@@ -761,6 +794,177 @@
     function closePopup(){
         document.getElementById("historyPopup").style.display = "none";
 }
+    function printOldSlip(index){
+
+        let slip = historyData[index];
+
+        let rows = "";
+
+        (slip.sizes || []).forEach((size, i) => {
+
+            rows += `
+            <tr>
+                <td>${size || ""}</td>
+                <td style="text-align:center;">
+                    ${(slip.qtys || [])[i] || ""}
+                </td>
+                <td style="text-align:right;">
+                    ${(slip.meters || [])[i] || ""}
+                </td>
+            </tr>
+            `;
+        });
+
+        let content = `
+        <html>
+
+        <head>
+
+        <title>Print Slip</title>
+
+        <style>
+
+            body{
+                font-family: monospace;
+                width:300px;
+                margin:auto;
+                padding:10px;
+                font-size:13px;
+                line-height:1.5;
+            }
+
+            h2,h3{
+                text-align:center;
+                margin:2px 0;
+            }
+
+            table{
+                width:100%;
+                border-collapse:collapse;
+                margin-top:5px;
+            }
+
+            th,td{
+                padding:4px 2px;
+            }
+
+            .right{
+                text-align:right;
+            }
+
+        </style>
+
+        </head>
+
+        <body>
+
+            <h2>SARVODAY STORES</h2>
+
+            <h3>CUTTING SLIP</h3>
+
+            <table style="width:100%; margin-top:10px;">
+
+            <tr>
+                <td style="width:90px;"><b>Slip No</b></td>
+                <td>: ${slip.slip_no || ""}</td>
+            </tr>
+
+            <tr>
+                <td><b>Date</b></td>
+                <td>: ${slip.date || ""}</td>
+            </tr>
+
+            <tr>
+                <td><b>Party</b></td>
+                <td>: ${slip.party || ""}</td>
+            </tr>
+
+            <tr>
+                <td><b>Address</b></td>
+                <td>: ${slip.address || ""}</td>
+            </tr>
+
+            <tr>
+                <td><b>Cloth</b></td>
+                <td>: ${slip.cloth || ""}</td>
+            </tr>
+
+            <tr>
+                <td><b>School</b></td>
+                <td>: ${slip.school || ""}</td>
+            </tr>
+
+            <tr>
+                <td><b>Item</b></td>
+                <td>: ${slip.item || ""}</td>
+            </tr>
+
+            </table>
+
+            <hr>
+
+            <table style="width:100%; border-collapse:collapse;">
+
+                <thead>
+                    <tr>
+
+                        <th style="text-align:left;">
+                            Size
+                        </th>
+
+                        <th style="text-align:center;">
+                            Qty
+                        </th>
+
+                        <th style="text-align:right;">
+                            Mtr
+                        </th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    ${rows}
+
+                </tbody>
+
+            </table>
+
+            <hr>
+
+            <p>
+                <b>Total Qty:</b>
+                ${slip.total_qty || 0}
+            </p>
+
+            <p>
+                <b>Total Meter:</b>
+                ${slip.total_meter || 0}
+            </p>
+
+            <p style="text-align:center;">
+                --- Thank You ---
+            </p>
+
+        </body>
+
+        </html>
+        `;
+
+        let win = window.open("", "", "width=400,height=700");
+
+        win.document.write(content);
+
+        win.document.close();
+
+        win.focus();
+
+        setTimeout(() => {
+            win.print();
+        }, 500);
+    }
+            
 </script>
     <div id="historyPopup" 
         style="display:none;
