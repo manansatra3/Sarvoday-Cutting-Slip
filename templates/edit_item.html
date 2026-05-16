@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Edit Item</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            padding:20px;
+        }
+
+        input{
+            width:300px;
+            padding:10px;
+            margin-bottom:10px;
+        }
+
+        button{
+            padding:10px 20px;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h2>Edit Item</h2>
+
+<form method="POST">
+
+    <input type="text"
+           name="item_name"
+           value="{{ item['item_name'] }}"
+           placeholder="Item Name"
+           required>
+
+    <br>
+
+    <input type="text"
+           name="sizes"
+           value="{{ item['sizes'] }}"
+           placeholder="Sizes">
+
+    <br>
+
+    <button type="submit">
+        Update Item
+    </button>
+
+</form>
+
+</body>
+</html>
