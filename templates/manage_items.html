@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Manage Items</title>
+
+    <style>
+
+        body{
+            font-family: Arial;
+            padding:20px;
+        }
+
+        table{
+            width:100%;
+            border-collapse: collapse;
+        }
+
+        th, td{
+            border:1px solid #ccc;
+            padding:10px;
+            text-align:left;
+        }
+
+        th{
+            background:#f2f2f2;
+        }
+
+        button{
+            padding:6px 12px;
+            cursor:pointer;
+        }
+
+        .delete-btn{
+            background:red;
+            color:white;
+            border:none;
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+<h2>Manage Items</h2>
+
+<table>
+
+<tr>
+    <th>ID</th>
+    <th>Item Name</th>
+    <th>Sizes</th>
+    <th>Edit</th>
+    <th>Delete</th>
+</tr>
+
+{% for item in items %}
+
+<tr>
+
+    <td>{{ item["id"] }}</td>
+
+    <td>{{ item["item_name"] }}</td>
+
+    <td>{{ item["sizes"] }}</td>
+
+    <td>
+
+        <a href="/edit_item/{{ item['id'] }}">
+            <button>Edit</button>
+        </a>
+
+    </td>
+
+    <td>
+
+        <form method="POST"
+              action="/delete_item/{{ item['id'] }}"
+              onsubmit="return confirm('Delete this item?')">
+
+            <button class="delete-btn">
+                Delete
+            </button>
+
+        </form>
+
+    </td>
+
+</tr>
+
+{% endfor %}
+
+</table>
+
+</body>
+</html>

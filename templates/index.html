@@ -3,10 +3,64 @@
 <head>
     <title>Cutting Slip</title>
     <style>
-        body {
-            font-family: Arial;
-            background: #f5f0eb;
+        .dashboard-cards{
+
+            display:grid;
+
+            grid-template-columns:repeat(4,1fr);
+
+            gap:15px;
+
+            padding:15px;
+
+            background:#1f1f1f;
+
+            margin:15px;
+
+            border-radius:12px;
+            
+        }
+
+        .card{
+
+            background:#2c2c2c;
+
+            padding:18px;
+
+            border-radius:10px;
+
+            text-align:center;
+
+            border:1px solid #444;
+        }
+
+        .card h4{
+
+            font-size:14px;
+
+            margin-bottom:10px;
+
+            color:#bbb;
+        }
+
+        .card p{
+
+            font-size:28px;
+
+            font-weight:bold;
+
+            color:white;
+        }
+
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f0eb;
         }
 
         .header {
@@ -16,331 +70,1701 @@
             text-align: center;
             font-size: 20px;
             font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+            height:58px;
+            display:flex;
+            align-items:center;
+            justify-content:center;
         }
 
-        .container {
-            width: 400px;
-            margin: 20px auto;
+        .button-bar {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 10px;
+            padding: 15px;
+            background: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+
+            position: sticky;
+            top: 58px;
+            z-index: 99;
+        }
+
+        .button-bar button {
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 13px;
+            color: white;
+            cursor: pointer;
+        }
+
+        .btn-party { background: #3498db; }
+        .btn-cloth { background: #27ae60; }
+        .btn-school { background: #e67e22; }
+        .btn-item { background: #8e44ad; }
+        .btn-history { background: #2c3e50; }
+        .btn-export {background: #16a085;
+        }
+
+        .main-wrapper {
+
+            display:flex;
+
+            gap:15px;
+
+            padding:15px;
+
+            height:calc(100vh - 150px);
+
+            overflow:hidden;
+        }
+
+        .left-panel {
+            width: 30%;
             background: white;
             padding: 20px;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow-y: auto;
         }
 
+        .right-panel {
+            width: 70%;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .right-panel h3 {
+            margin-bottom: 15px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .history-table-wrapper {
+
+            flex:1;
+
+            overflow-y:auto;
+
+            border:1px solid #ddd;
+
+            border-radius:6px;
+        }
+
+        /* FORM STYLES */
         label {
+            display: block;
             font-weight: bold;
             font-size: 13px;
+            margin-top: 10px;
+            margin-bottom: 5px;
+            color: #333;
         }
 
-        input,
+        input[type="text"],
+        input[type="date"],
         select {
             width: 100%;
             padding: 8px;
-            margin: 5px 0 12px;
+            margin-bottom: 12px;
             border: 1px solid #ccc;
             border-radius: 4px;
-            box-sizing: border-box;
+            font-size: 13px;
         }
-
-        button {
+ 
+        textarea {
             width: 100%;
             padding: 10px;
-            background: #2980b9;
-            color: white;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            margin-top: 5px;
-        }
-
-        button:hover {
-            background: #1f6391;
-        }
-
-        .history {
-            margin-top: 20px;
-        }
-
-        .card {
-            background: #fdf6f0;
-            padding: 8px;
-            margin-bottom: 5px;
+            margin-bottom: 12px;
+            border: 1px solid #ccc;
             border-radius: 4px;
+            font-size: 13px;
+            resize: vertical;
+            min-height: 80px;
+            font-family: Arial, sans-serif;
+            box-sizing: border-box;
+            display: block;
+            vertical-align: top;
+        }
+ 
+        textarea::placeholder {
+            color: #999;
+            opacity: 1;
+        }
+ 
+        #remark {
+            padding: 10px !important;
+        }
+ 
+        #remark::placeholder {
+            color: #999 !important;
+            opacity: 1 !important;
+        }
+
+        #sizeTable {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 12px 0;
+            font-size: 12px;
+        }
+
+        #sizeTable th {
+            background: #34495e;
+            color: white;
+            padding: 8px;
+            text-align: left;
+        }
+
+        #sizeTable td {
+            padding: 6px;
+            border-bottom: 1px solid #eee;
         }
 
         #sizeTable input,
         #sizeTable select {
             margin: 0;
-        }    
+            padding: 4px;
+            width: 100%;
+        }
+
+        .totals {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 6px;
+            margin: 10px 0;
+            font-weight: bold;
+            font-size: 13px;
+        }
+
+        .button-grid {
+
+            display:grid;
+
+            grid-template-columns:
+                1fr 1fr 1fr;
+
+            gap:10px;
+
+            margin-top:15px;
+        }
+
+        button[type="button"],
+        button[type="submit"] {
+            padding: 10px;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .btn-add-row { background: #27ae60; }
+        .btn-new-slip { background: #e67e22; }
+        .btn-print { background: #8e44ad; }
+        .btn-save { background: #2980b9; }
+
+        /* HISTORY TABLE STYLES */
+        .history-table-wrapper table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 12px;
+        }
+
+        .history-table-wrapper th {
+            background: #34495e;
+            color: white;
+            padding: 8px;
+            text-align: left;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .history-table-wrapper td {
+            padding: 8px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .history-table-wrapper tr:hover {
+            background: #f8f9fa;
+        }
+
+        .history-table-wrapper tr.cancelled {
+            background: #fecaca;
+        }
+
+        .history-table-wrapper button {
+            padding: 4px 8px;
+            border: none;
+            border-radius: 4px;
+            color: white;
+            cursor: pointer;
+            font-size: 11px;
+            font-weight: bold;
+            margin-right: 4px;
+        }
+
+        .btn-view { background: #3498db; }
+        .btn-edit { background: #27ae60; }
+        .btn-cancel { background: #e74c3c; }
+
+        /* POPUP */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+            z-index: 1000;
+            max-width: 400px;
+            width: 90%;
+            animation: popupBlink 0.6s ease-in-out 3;
+        }
+
+        /* Blink Animation */
+        @keyframes popupBlink {
+            0% {
+                transform: translate(-50%, -50%) scale(0.95);
+                box-shadow: 0 0 30px rgba(52, 152, 219, 0.8);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 40px rgba(52, 152, 219, 1);
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.95);
+                box-shadow: 0 0 30px rgba(52, 152, 219, 0.8);
+            }
+        }
+
+        /* Blur Overlay */
+        .popup-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            backdrop-filter: blur(3px);
+        }
+
+        .popup-overlay.active {
+            display: block;
+        }
+
+        .popup.active {
+            display: block;
+        }
+
+        .popup h3 {
+            margin-bottom: 15px;
+        }
+
+        .popup input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+        }
+
+        .popup button {
+            width: 48%;
+            padding: 10px;
+            margin-right: 2%;
+            border: none;
+            border-radius: 6px;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .popup button:last-child {
+            margin-right: 0;
+        }
+
+        #historyPopup {
+            max-height: 80vh;
+            overflow-y: auto;
+            width: 380px;
+            max-width: 500px;
+        }
+
+        /* PRINT AREA */
+        #printArea {
+            display: none;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .footer{
+            background:#2c2c2c;
+            color:white;
+
+            height:32px;
+
+            display:flex;
+            align-items:center;
+            justify-content:center;
+
+            font-weight:bold;
+            font-size:11px;
+
+            margin-top:10px;
+        }
+
+        #toast{
+
+            position:fixed;
+
+            top:20px;
+
+            left:50%;
+
+            transform:translateX(-50%);
+
+            background:#27ae60;
+
+            color:white;
+
+            padding:14px 25px;
+
+            border-radius:8px;
+
+            font-weight:bold;
+
+            z-index:9999;
+
+            display:none;
+
+            box-shadow:0 4px 10px rgba(0,0,0,0.2);
+        }
+
+        input,
+        select {
+            text-transform: uppercase;
+        }
+
+        #remark{
+
+            text-transform:none !important;
+
+            text-align:left;
+
+            padding:10px;
+
+            line-height:20px;
+        }
+ 
+        #remark{
+            ime-mode:disabled;
+        }
+
+        textarea {
+            text-transform: none;
+        }
+
+        .selectedRow{
+
+            background:#3498db !important;
+
+            color:white !important;
+        }
+
+        .historyActions{
+
+            display:grid;
+
+            grid-template-columns:
+                1fr 1fr 1fr 1fr;
+
+            gap:10px;
+
+            margin-bottom:10px;
+        }
+
+        .historyActions button{
+
+            height:42px;
+
+            border:none;
+
+            border-radius:8px;
+
+            color:white;
+
+            font-weight:bold;
+
+            font-size:14px;
+
+            cursor:pointer;
+
+            transition:0.2s;
+        }
+
+        .historyActions button:hover{
+
+            transform:scale(1.02);
+        }
+
+        /* Individual Colors */
+
+        .historyActions button:nth-child(1){
+
+            background:#3498db;
+        }
+
+        .historyActions button:nth-child(2){
+
+            background:#27ae60;
+        }
+
+        .historyActions button:nth-child(3){
+
+            background:#e74c3c;
+        }
+
+        .historyActions button:nth-child(4){
+
+            background:#8e44ad;
+        }
+
+        .historyActions button{
+
+            padding:10px 18px;
+
+            border:none;
+
+            border-radius:6px;
+
+            color:white;
+
+            font-weight:bold;
+
+            cursor:pointer;
+
+            background:#2c3e50;
+        }
+
+        .history{
+
+            display:flex;
+
+            flex-direction:column;
+
+            height:75vh;
+
+            background:white;
+
+            padding:10px;
+
+            border-radius:10px;
+        }
+
+        .historyTableArea{
+
+            flex:1;
+
+            overflow:hidden;
+
+            display:flex;
+
+            flex-direction:column;
+        }
+
+        table{
+
+            table-layout:fixed;
+
+            width:100%;
+        }
+
+        .history table{
+
+            width:100%;
+
+            table-layout:auto;
+        }
+
+        .history td{
+
+            white-space:nowrap;
+        }
+        
+        body.dark-mode{
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #0f172a,
+                    #111827,
+                    #0b1120
+                );
+
+            color:white;
+        }
+
+        body.dark-mode .left-panel,
+        body.dark-mode .right-panel,
+        body.dark-mode .popup{
+
+            background:rgba(17,24,39,0.95);
+
+            color:white;
+
+            border:1px solid #334155;
+        }
+
+        body.dark-mode input,
+        body.dark-mode textarea,
+        body.dark-mode select{
+
+            background:#0f172a;
+
+            color:white;
+
+            border:1px solid #334155;
+        }
+
+        body.dark-mode textarea::placeholder {
+            color: #666;
+            opacity: 1;
+        }
+ 
+        body.dark-mode #remark::placeholder {
+            color: #666 !important;
+            opacity: 1 !important;
+        }
+
+        body.dark-mode table{
+
+            color:white;
+        }
+
+        body.dark-mode th{
+
+            background:#1e293b;
+        }
+
+        body.dark-mode td{
+
+            border-bottom:1px solid #334155;
+        }
+
+        body.dark-mode .history-table-wrapper tr:hover{
+
+            background:#1e293b;
+        }
+
+        body.dark-mode label{
+
+            color:#e5e7eb;
+        }
+
+        body.dark-mode .totals{
+
+            background:#111827;
+
+            border:1px solid #334155;
+        }
+
+        .qty-meter-box{
+
+            border-left:5px solid #22c55e;
+
+            background:white;           
+               
+
+            box-shadow:
+                0 4px 12px rgba(0,0,0,0.25);
+        }
+
+        .dark-mode .qty-meter-box{
+            border-left:5px solid #22c55e;
+            background:
+                linear-gradient(
+                    135deg,
+                    #1e293b,
+                    #0f172a
+                );
+        }
+
+        body.dark-mode .history-table-wrapper tr.cancelled{
+
+            background:
+                rgba(239,68,68,0.15);
+
+            color:#fecaca;
+        }
+
+        .row-add-btn,
+        .row-delete-btn{
+
+            border:none;
+
+            width:32px;
+
+            height:32px;
+
+            border-radius:8px;
+
+            cursor:pointer;
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            padding:0;
+        }
+
+        .row-add-btn{
+
+            background:linear-gradient(
+                135deg,
+                #3b82f6,
+                #2563eb
+            );
+
+            color:white;
+
+            box-shadow:
+                0 4px 10px rgba(37,99,235,0.35);
+        }
+
+        .row-delete-btn{
+
+            background:linear-gradient(
+                135deg,
+                #ef4444,
+                #dc2626
+            );
+
+            color:white;
+
+            box-shadow:
+                0 4px 10px rgba(239,68,68,0.35);
+        }
+
+        .row-add-btn span,
+        .row-delete-btn span{
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            width:100%;
+
+            height:100%;
+
+            font-size:22px;
+
+            font-weight:bold;
+
+            line-height:1;
+        }
+
+        .btn-sign{
+
+            display:flex;
+
+            align-items:center;
+
+            justify-content:center;
+
+            width:100%;
+
+            height:100%;
+
+            font-size:26px;
+
+            font-weight:bold;
+
+            line-height:1;
+
+            margin-top:-2px;
+        }
+
+        textarea#remark{
+
+            all: unset;
+
+            width: 100%;
+
+            height: 90px;
+
+            border: 2px solid #333;
+
+            border-radius: 6px;
+
+            padding: 10px;
+
+            box-sizing: border-box;
+
+            font-size: 14px;
+
+            font-family: Arial, sans-serif;
+
+            line-height: 20px;
+
+            background: white;
+
+            color: black;
+
+            resize: none;
+
+            display: block;
+
+            text-align: left;
+        }
+        
+
+
     </style>
 </head>
 <body>
 
+<div id="popupOverlay" class="popup-overlay"></div>
+
+<div id="toast"></div>
+
 <div class="header">
-    ✂ SARVODAY STORES - Cutting Slip
+     SARVODAY STORES - Cutting Slip - ✂
 </div>
 
-<div class="container">
-    <form method="POST">
-        <label>Slip No</label>
-        <input name="slip_no" id="slipNoInput" readonly>   
+<div class="button-bar">
+    <button class="btn-party" onclick="openPartyPopup()">➕ Party</button>
+    <button class="btn-cloth" onclick="openClothPopup()">➕ Cloth</button>
+    <button class="btn-school" onclick="openSchoolPopup()">➕ School</button>
+    <button class="btn-item" onclick="openItemPopup()">➕ Item</button>
+    <button class="btn-history" onclick="toggleHistory()">📋 History Open / Close</button>
+    <button class="btn-export" onclick="window.location.href='/export_excel'">📥 Export Excel</button>
+    <button onclick="toggleTheme()"
+        id="themeBtn"
+        style="background:#111827;">
+    🌙 Dark Mode</button>
+</div>
 
-        <label>Date</label>
-        <input type="date" name="date" id="date">
 
-        <label>Party</label>
-        <select name="party">
-            <option value="">Select Party</option>
+<div class="main-wrapper">
+    <!-- LEFT PANEL - MAIN APP FORM -->
+    <div class="left-panel">
+        <form method="POST">
+            <label>Slip No</label>
+            <input type="text" name="slip_no" id="slipNoInput" readonly>
 
-            {% for p in party_list %}
-                <option value="{{p}}">{{p}}</option>
-            {% endfor %}
-        </select>
+            <label>Date</label>
+            <input type="date" name="date" id="date">
 
-        <label>Party Address</label>
-        <input type="text" id="address" name="address" readonly>
-              
-        <label>Cloth</label>
-        <select id="cloth" name="cloth">
-            <option value="">Select Cloth</option>
+            <label>Party</label>
+            <select name="party" id="partySelect">
+                <option value="">Select Party</option>
+                {% for p in party_list %}
+                    <option value="{{p}}">{{p}}</option>
+                {% endfor %}
+            </select>
 
-            {% for c in cloth_list %}
-                <option value="{{c}}">{{c}}</option>
-            {% endfor %}
-        </select>
+            <label>Party Address</label>
+            <input type="text" id="address" name="address" readonly>
 
-        <label>School Name</label>
-        <select id="school" name="school">
-            <option value="">Select School</option>
+            <label>Cloth</label>
+            <select id="cloth" name="cloth">
+                <option value="">Select Cloth</option>
+                {% for c in cloth_list %}
+                    <option value="{{c}}">{{c}}</option>
+                {% endfor %}
+            </select>
 
-            {% for s in school_list %}
-                <option value="{{s}}">{{s}}</option>
-            {% endfor %}
-        </select>
-          
-        <label>Item</label>
-        <select name="item">
-            <option value="">Select Item</option>
+            <label>School Name</label>
+            <select id="school" name="school">
+                <option value="">Select School</option>
+                {% for s in school_list %}
+                    <option value="{{s}}">{{s}}</option>
+                {% endfor %}
+            </select>
 
-            {% for i in item_list %}
-                <option value="{{i}}">{{i}}</option>
-            {% endfor %}
-        </select>
-        
-        <table id="sizeTable" style="width:100%">
-            <tr>
-                <th class="size-col">Size</th>
+            <label>Item</label>
+            <select name="item" id="itemSelect">
+                <option value="">Select Item</option>
+                {% for i in item_list %}
+                    <option value="{{i}}">{{i}}</option>
+                {% endfor %}
+            </select>
 
-                <th class="qty-col">
-                    Qnty
-                </th>
-
-                <th class="mtr-col">
-                    Mtr
-                </th>
-            </tr>
-
-            <tr>
-                <td>
-                <select name="size[]">
-                    <option value="">Select</option>
-                </select>
-                </td>
-                <td><input name="qty[]" oninput="calculateTotal()"></td>
-                <td><input name="meter[]" oninput="calculateTotal()"></td>
-            </tr>
-        </table>
-
-        <div style="margin-top:10px;">
-            <b>Total Qty:</b> <span id="totalQty">0</span><br>
-            <b>Total Meter:</b> <span id="totalMeter">0</span>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-top:10px;">
-
-            <button type="button"
-                    onclick="addRow()"
-                    style="background:#27ae60;">
-                + Add Row
-            </button>
-
-            <button type="button"
-                    onclick="clearFormData()"
-                    style="background:#e67e22;">
-                🆕 New Slip
-            </button>
-
-            <button type="button"
-                    onclick="if(validateForm()) printSlip()"
-                    style="background:#8e44ad;">
-                🖨️ Print Slip
-            </button>
-
-            <button type="submit"
-                    onclick="return validateForm()"
-                    style="background:#2980b9;">
-                💾 Save Slip
-            </button>
-
-        </div>
-        <input type="hidden" name="total_qty" id="hiddenTotalQty">
-        <input type="hidden" name="total_meter" id="hiddenTotalMeter">
-    </form>
-    
-    <!-- PRINT AREA -->
-    <div id="printArea" style="display:none;">
-        <div style="text-align:center; margin-bottom:10px;">
-            <h2 style="margin:0;">SARVODAY STORES</h2>
-
-            <h3 style="margin:0;">
-                CUTTING SLIP
-            </h3>
-        </div>
-        <table class="info-table"
-                style="width:100%; margin-bottom:10px; border:none;">
-
-            <tr>
-                <td class="label">Slip No</td>
-                <td class="colon">:</td>
-                <td id="p_slip"></td>
-            </tr>
-
-            <tr>
-                <td class="label">Date</td>
-                <td class="colon">:</td>
-                <td id="p_date"></td>
-            </tr>
-
-            <tr>
-                <td class="label">Party</td>
-                <td class="colon">:</td>
-                <td id="p_party"></td>
-            </tr>
-
-            <tr>
-                <td class="label">Address</td>
-                <td class="colon">:</td>
-                <td id="p_address"></td>
-            </tr>
-
-            <tr>
-                <td class="label">Cloth</td>
-                <td class="colon">:</td>
-                <td id="p_cloth"></td>
-            </tr>
-
-            <tr>
-                <td class="label">Item</td>
-                <td class="colon">:</td>
-                <td id="p_item"></td>
-            </tr>
-
-        </table>
-
-        <hr>
-
-        <table class="size-table"
-                style="width:100%; table-layout:fixed;">
-            <thead>
+            <table id="sizeTable">
                 <tr>
-                    <th>Size</th>
-                    <th>Qnty</th>
-                    <th>Mtr</th>
+                    <th style="width: 35%;">Size</th>
+                    <th style="width: 25%;">Qty</th>
+                    <th style="width: 25%;">Mtr</th>
+                    <th style="width: 15%;">+</th>
                 </tr>
-            </thead>
-            <tbody id="p_table"></tbody>
-        </table>
 
-        <hr>
+                <tr>
+                    <td>
+                        <select name="size[]">
+                            <option value="">Select</option>
+                        </select>
+                    </td>
 
-        <table style="width:100%; margin-top:10px;">
-        <tr>
+                    <td>
+                        <input type="text"
+                            name="qty[]"
+                            oninput="calculateTotal()">
+                    </td>
 
-        <td style="width:40%;"></td>
+                    <td>
+                        <input type="text"
+                            name="meter[]"
+                            oninput="calculateTotal()"
+                            onblur="this.value=parseFloat(this.value || 0).toFixed(2)">
+                    </td>
 
-        <td style="width:25%; text-align:right; padding-right:12px; white-space:nowrap;">
-        <b id="p_total_qty"></b>
-        </td>
+                    <td style="text-align:left;">
 
-        <td style="width:35%; text-align:right; padding-right:6px; white-space:nowrap;">
-        <b id="p_total_meter"></b>
-        </td>
+                        <button type="button"
+                                onclick="addRow()"
+                                class="row-add-btn">
+                            <span class="btn-sign">+</span>
+                        </button>
+                    </td>
+                </tr>
+            </table>
 
-        </tr>
-        </table>
+            <div class="totals qty-meter-box">
+                <div>Total Qty: <span id="totalQty">0</span></div>
+                <div>Total Meter: <span id="totalMeter">0.00</span></div>
+            </div>
 
-        <p style="text-align:center;">--- Thank You ---</p>
+            <label>Remark</label>
+            <textarea id="remark"
+            name="remark"
+            placeholder="Enter remark here..."
+            autocomplete="off"
+            spellcheck="false">{{''}}</textarea>   
+
+            <div class="button-grid">
+                <button type="button" class="btn-print" onclick="if(validateForm()) printSlip()">🖨️ Print Slip</button>
+                <button type="submit" class="btn-save" onclick="return validateForm()">💾 Save Slip</button>
+                <button type="button" class="btn-new-slip" onclick="clearFormData()">🆕 New Slip</button>
+            </div>
+
+            <input type="hidden" name="total_qty" id="hiddenTotalQty">
+            <input type="hidden" name="total_meter" id="hiddenTotalMeter">
+        </form>
     </div>
 
-    <div class="history"
-        style="
-            position:fixed;
-            right:10px;
-            top:80px;
-            width:320px;
-            height:85vh;
-            overflow:auto;
-            background:white;
-            padding:10px;
-            border-radius:10px;
-            box-shadow:0 0 10px rgba(0,0,0,0.2);
-        ">
+    
+    <!-- RIGHT PANEL - HISTORY TABLE -->
+    <div class="right-panel">
+        <div style="margin-bottom:12px;">
 
-        <h3>History</h3>
+            <!-- TOP DASHBOARD -->
+            <div style="
+                display:grid;
+                grid-template-columns:1fr 1fr 1fr 1fr;
+                gap:10px;
+                margin-bottom:10px;
+            ">
 
-        {% for h in history %}
-            <div class="card">
+                <div style="
+                    background:linear-gradient(135deg,#1e293b,#0f172a);
+                    border-left:10px solid #22c55e;
+                    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+                    color:white;
+                    border-radius:8px;
+                    height:42px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-weight:bold;
+                    font-size:13px;
+                ">
+                    Today's Slip :
+                    <span id="todaySlipCount" style="margin-left:5px;">0</span>
+                </div>
 
-                <table style="width:100%; font-size:12px;">
-                    <tr>
-                        <td><b>Date</b></td>
-                        <td><b>Slip</b></td>
-                    </tr>
+                <div style="
+                    background:linear-gradient(135deg,#1e293b,#0f172a);
+                    border-left:10px solid #f59e0b;
+                    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+                    color:white;
+                    border-radius:8px;
+                    height:42px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-weight:bold;
+                    font-size:13px;
+                ">
+                    Total Qty :
+                    <span id="dashboardQty" style="margin-left:5px;">0</span>
+                </div>
 
-                    <tr>
-                        <td>{{h.date}}</td>
-                        <td>{{h.slip_no}}</td>
-                    </tr>
+                <div style="
+                    background:linear-gradient(135deg,#1e293b,#0f172a);
+                    border-left:10px solid #ef4444;
+                    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+                    color:white;
+                    border-radius:8px;
+                    height:42px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-weight:bold;
+                    font-size:13px;
+                ">
+                    Total Mtr :
+                    <span id="dashboardMeter" style="margin-left:5px;">0.00</span>
+                </div>
 
-                    <tr>
-                        <td colspan="2">
-                            <b>{{h.party}}</b>
-                        </td>
-                    </tr>
+                <div style="
+                    background:linear-gradient(135deg,#1e293b,#0f172a);
+                    border-left:10px solid #0c6be7;
+                    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+                    color:white;
+                    border-radius:8px;
+                    height:42px;
+                    display:flex;
+                    align-items:center;
+                    justify-content:center;
+                    font-weight:bold;
+                    font-size:13px;
+                ">
+                    Cancelled :
+                    <span id="cancelledCount" style="margin-left:5px;">0</span>
+                </div>
 
-                    <tr>
-                        <td colspan="2">
-                            {{h.school}}
-                        </td>
-                    </tr>
-                </table>
+            </div>
+            
+            <!-- SEARCH ROW -->
+            <div style="
+                display:grid;
+                grid-template-columns:2fr 1fr 1fr;
+                gap:10px;
+            ">
 
-                <br><br>
+                <input type="text"
+                    id="historySearch"
+                    placeholder="Search Slip / Party"
+                    onkeyup="filterHistory()"
+                    style="
+                        height:40px;
+                        border:1px solid #ccc;
+                        border-radius:8px;
+                        padding:0 12px;
+                        font-size:12px;
+                    ">
 
-                <button type="button" onclick="viewSlip('{{ loop.index0 }}')">
-                    View
+                <button onclick="filterHistory()"
+                    style="
+                        background:#077aee;
+                        color:white;
+                        border:none;
+                        border-radius:8px;
+                        height:40px;
+                        font-size:12px;
+                        font-weight:bold;
+                        cursor:pointer;
+                    ">
+                    🔍 Search
+                </button>
+
+                <button onclick="resetHistorySearch()"
+                    style="
+                        background:#e74c3c;
+                        color:white;
+                        border:none;
+                        border-radius:8px;
+                        height:40px;
+                        font-size:12px;
+                        font-weight:bold;
+                        cursor:pointer;
+                    ">
+                    🔄 Reset
                 </button>
 
             </div>
-        {% endfor %}
+
+        </div>
+        <div class="historyTableArea">
+
+            <div class="history-table-wrapper">
+
+                <table>
+
+                    <thead>
+                        <tr>
+                            <th style="width: 6%;">Slip</th>
+                            <th style="width: 14%;">Date</th>
+                            <th style="width: 40%;">Party</th>
+                            <th style="width: 40%;">School</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="historyTableBody">
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+        <div class="historyActions">
+
+                <button onclick="viewSelectedSlip()">
+                    👁 View
+                </button>
+
+                <button onclick="editSelectedSlip()">
+                    ✏ Edit
+                </button>
+
+                <button onclick="cancelSelectedSlip()">
+                    ❌ Cancel
+                </button>
+
+                <button onclick="pdfSelectedSlip()">
+                    📄 PDF
+                </button>
+
+            </div>
+        </div>
     </div>
 </div>
-    <script>
+
+<!-- PRINT AREA (HIDDEN) -->
+<div id="printArea" style="display:none;">
+    <div style="text-align:center; margin-bottom:10px;">
+        <h2 style="margin:0;">SARVODAY STORES</h2>
+        <h3 style="margin:0;">CUTTING SLIP</h3>
+    </div>
+    <table style="width:100%; margin-bottom:10px;">
+        <tr><td style="width:70px; font-weight:bold;">Slip No</td><td>:</td><td id="p_slip"></td></tr>
+        <tr><td style="font-weight:bold;">Date</td><td>:</td><td id="p_date"></td></tr>
+        <tr><td style="font-weight:bold;">Party</td><td>:</td><td id="p_party"></td></tr>
+        <tr><td style="font-weight:bold;">Address</td><td>:</td><td id="p_address"></td></tr>
+        <tr><td style="font-weight:bold;">Cloth</td><td>:</td><td id="p_cloth"></td></tr>
+        <tr><td style="font-weight:bold;">Item</td><td>:</td><td id="p_item"></td></tr>
+        
+    </table>
+    <hr>
+    <table style="width:100%; border-collapse:collapse;">
+        <thead>
+            <tr>
+                <th style="border-bottom:1px dashed black; padding:4px;">Size</th>
+                <th style="border-bottom:1px dashed black; padding:4px;">Qty</th>
+                <th style="border-bottom:1px dashed black; padding:4px;">Mtr</th>
+            </tr>
+        </thead>
+        <tbody id="p_table"></tbody>
+    </table>
+    <hr>
+    <p><b>Total Qty:</b> <span id="p_total_qty">0</span></p>
+    <p><b>Total Meter:</b> <span id="p_total_meter">0.00</span></p>
+    <p>
+
+        <b>Remark:</b><br>
+
+        <span id="p_remark"
+            style="white-space:pre-line;">
+
+        </span>
+
+    </p>
+    <p style="text-align:center;">--- Thank You ---</p>
+</div>
+
+<!-- POPUPS -->
+
+<div id="partyPopup" class="popup">
+
+    <h3>Party Manager</h3>
+
+    <input type="text"
+           id="partySearch"
+           placeholder="Search Party"
+           onkeyup="filterPartyList()">
+
+    <div style="
+        max-height:200px;
+        overflow-y:auto;
+        border:1px solid #ddd;
+        border-radius:6px;
+        margin-bottom:10px;
+    ">
+
+        <table style="width:100%; border-collapse:collapse;">
+
+            <tbody id="partyListBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <input type="hidden" id="editingPartyId">
+
+    <input type="text"
+           id="newPartyName"
+           placeholder="Party Name">
+
+    <input type="text"
+           id="newPartyAddress"
+           placeholder="Party Address">
+
+    <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr 1fr 1fr;
+        gap:10px;
+        margin-top:12px;
+    ">
+
+        <button onclick="saveParty()"
+                style="
+                    width:100%;
+                    background:#27ae60;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Save
+        </button>
+
+        <button onclick="updateParty()"
+                style="
+                    width:100%;
+                    background:#3498db;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Update
+        </button>
+
+        <button onclick="deleteParty()"
+                style="
+                    width:100%;
+                    background:#e74c3c;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Delete
+        </button>
+
+        <button onclick="closePartyPopup()"
+                style="
+                    width:100%;
+                    background:#555;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Close
+        </button>
+
+    </div>
+
+</div>
+```
+
+
+<div id="clothPopup" class="popup">
+
+    <h3>Cloth Manager</h3>
+
+    <input type="text"
+           id="clothSearch"
+           placeholder="Search Cloth"
+           onkeyup="filterClothList()">
+
+    <div style="
+        max-height:200px;
+        overflow-y:auto;
+        border:1px solid #ddd;
+        border-radius:6px;
+        margin-bottom:10px;
+    ">
+
+        <table style="
+            width:100%;
+            border-collapse:collapse;
+        ">
+
+            <tbody id="clothListBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <input type="hidden"
+           id="editingClothId">
+
+    <input type="text"
+           id="newCloth"
+           placeholder="Cloth Name">
+
+    <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr 1fr 1fr;
+        gap:10px;
+        margin-top:12px;
+    ">
+
+        <button onclick="saveCloth()"
+                style="
+                    width:100%;
+                    background:#27ae60;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Save
+        </button>
+
+        <button onclick="updateCloth()"
+                style="
+                    width:100%;
+                    background:#3498db;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Update
+        </button>
+
+        <button onclick="deleteCloth()"
+                style="
+                    width:100%;
+                    background:#e74c3c;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Delete
+        </button>
+
+        <button onclick="closeClothPopup()"
+                style="
+                    width:100%;
+                    background:#555;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+<div id="schoolPopup" class="popup">
+
+    <h3>School Manager</h3>
+
+    <input type="text"
+           id="schoolSearch"
+           placeholder="Search School"
+           onkeyup="filterSchoolList()">
+
+    <div style="
+        max-height:200px;
+        overflow-y:auto;
+        border:1px solid #ddd;
+        border-radius:6px;
+        margin-bottom:10px;
+    ">
+
+        <table style="
+            width:100%;
+            border-collapse:collapse;
+        ">
+
+            <tbody id="schoolListBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <input type="hidden"
+           id="editingSchoolId">
+
+    <input type="text"
+           id="newSchool"
+           placeholder="School Name">
+
+    <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr 1fr 1fr;
+        gap:10px;
+        margin-top:12px;
+    ">
+
+        <button onclick="saveSchool()"
+                style="
+                    width:100%;
+                    background:#27ae60;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Save
+        </button>
+
+        <button onclick="updateSchool()"
+                style="
+                    width:100%;
+                    background:#3498db;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Update
+        </button>
+
+        <button onclick="deleteSchool()"
+                style="
+                    width:100%;
+                    background:#e74c3c;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Delete
+        </button>
+
+        <button onclick="closeSchoolPopup()"
+                style="
+                    width:100%;
+                    background:#555;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Close
+        </button>
+
+    </div>
+
+</div>
+
+<div id="itemPopup" class="popup">
+    <h3>Add Item & Sizes</h3>
+    <input type="text"
+        id="itemSearch"
+        placeholder="Search Item"
+        onkeyup="filterItemList()">
+
+    <div style="
+        max-height:180px;
+        overflow-y:auto;
+        border:1px solid #ddd;
+        border-radius:6px;
+        margin-bottom:10px;
+    ">
+
+        <table style="
+            width:100%;
+            border-collapse:collapse;
+        ">
+
+            <tbody id="itemListBody">
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <input type="hidden"
+        id="editingItemId">
+    <input type="text" id="newItem" placeholder="Item Name">
+    <input type="text" id="newSizes" placeholder="Sizes Example: 28,30,32,34">
+    <div style="
+        display:grid;
+        grid-template-columns:1fr 1fr 1fr 1fr;
+        gap:10px;
+        margin-top:12px;
+    ">
+
+        <button onclick="saveItem()"
+                style="
+                    width:100%;
+                    background:#27ae60;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Save
+        </button>
+
+        <button onclick="updateItem()"
+                style="
+                    width:100%;
+                    background:#3498db;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Update
+        </button>
+
+        <button onclick="deleteItem()"
+                style="
+                    width:100%;
+                    background:#e74c3c;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Delete
+        </button>
+
+        <button onclick="
+                    document.getElementById(
+                        'itemPopup'
+                    ).style.display='none'
+                    hidePopupOverlay();
+                "
+                style="
+                    width:100%;
+                    background:#555;
+                    color:white;
+                    border:none;
+                    padding:10px;
+                    border-radius:6px;
+                    font-weight:bold;
+                ">
+            Close
+        </button>
+
+    </div>
+</div>
+
+<div id="historyPopup" class="popup">
+    <div id="popupContent"></div>
+    <button onclick="closeHistoryPopup()" style="width:100%; background:#555; color:white; margin-top:10px;">Close</button>
+</div>
+
+<script>
+    // DATA
+    let sizeMap = {{ size_map | tojson }};
+    let partyData = {{ party_data | tojson }};
+    let clothList = {{ cloth_list | tojson }};
+    let schoolList = {{ school_list | tojson }};
+    let itemList = {{ items | tojson }};
+    let historyData = {{ history | tojson }};
+
+    // POPUP OVERLAY HELPER FUNCTIONS
+    function showPopupOverlay() {
+        document.getElementById("popupOverlay").classList.add("active");
+    }
+
+    function hidePopupOverlay() {
+        document.getElementById("popupOverlay").classList.remove("active");
+    }
+
+    // INIT
+    window.onload = function() {
+        document.getElementById("slipNoInput").value = {{slip_no}};
+        document.getElementById("date").value = new Date().toISOString().split('T')[0];
+        updateSizes();
+        populateHistoryTable();
+        loadDashboard();
+    };
+
+    // POPULATE HISTORY TABLE
+    function populateHistoryTable() {
+        let tbody = document.getElementById("historyTableBody");
+        tbody.innerHTML = "";
+
+        [...historyData].reverse().forEach(h => {
+            let row = tbody.insertRow();
+
+            row.setAttribute(
+                "onclick",
+                `selectSlip('${h.slip_no}', this)`
+            );
+
+            row.setAttribute(
+                "ondblclick",
+                `viewSlip('${h.slip_no}')`
+            );
+            if (h.status === "Cancelled") row.classList.add("cancelled");
+
+            row.innerHTML = `
+                <td><strong>${h.slip_no || ""}</strong></td>
+                <td>${h.date || ""}</td>
+                <td>${h.party || ""}</td>
+                <td>${h.school || ""}</td>
+                
+            `;
+        });
+    }
+
+    function loadDashboard() {
+
+        let today = new Date()
+            .toISOString()
+            .split('T')[0];
+
+        let todayCount = 0;
+
+        let totalQty = 0;
+
+        let totalMeter = 0;
+
+        let cancelled = 0;
+
+        historyData.forEach(h => {
+
+            let hDate = h.date || "";
+
+            if(hDate.includes("-")) {
+
+                let parts = hDate.split("-");
+
+                if(parts[0].length === 2){
+
+                    hDate = parts[2] + "-" +
+                            parts[1] + "-" +
+                            parts[0];
+                }
+            }
+
+            if(hDate === today){
+
+                todayCount++;
+            }
+
+            totalQty += parseFloat(
+                h.total_qty || 0
+            );
+
+            totalMeter += parseFloat(
+                h.total_meter || 0
+            );
+
+            if(h.status === "Cancelled"){
+
+                cancelled++;
+            }
+        });
+
+        document.getElementById(
+            "todaySlipCount"
+        ).innerText = todayCount;
+
+        document.getElementById(
+            "dashboardQty"
+        ).innerText = totalQty;
+
+        document.getElementById(
+            "dashboardMeter"
+        ).innerText = totalMeter.toFixed(2);
+
+        document.getElementById(
+            "cancelledCount"
+        ).innerText = cancelled;
+    }
+
+    // FORM FUNCTIONS
     function addRow() {
 
-        let item = document.querySelector("select[name='item']").value;
+        let item = document.getElementById(
+            "itemSelect"
+        ).value;
 
         let sizes = sizeMap[item] || [];
 
-        let options = "<option value=''>Select</option>";
+        let options =
+            "<option value=''>Select</option>";
 
         sizes.forEach(size => {
+
             options += `<option>${size}</option>`;
         });
 
-        let table = document.getElementById("sizeTable");
+        let table =
+            document.getElementById("sizeTable");
 
         let row = table.insertRow();
 
         row.innerHTML = `
+
             <td>
                 <select name="size[]">
                     ${options}
@@ -348,22 +1772,61 @@
             </td>
 
             <td>
-                <input name="qty[]" oninput="calculateTotal()">
+                <input type="text"
+                    name="qty[]"
+                    oninput="calculateTotal()">
             </td>
 
             <td>
-                <input name="meter[]" oninput="calculateTotal()">
+                <input type="text"
+                    name="meter[]"
+                    oninput="calculateTotal()"
+                    onblur="this.value=parseFloat(this.value || 0).toFixed(2)">
+            </td>
+
+            <td style="text-align:center;">
+
+                <div style="
+                    display:flex;
+                    gap:5px;
+                    justify-content:flex-start;
+                ">
+
+                    <button type="button"
+                        onclick="addRow()"
+                        class="row-add-btn">
+
+                    <span class="btn-sign">+</span>
+
+                </button>
+
+                    <button type="button"
+                        onclick="deleteRow(this)"
+                        class="row-delete-btn">
+
+                    <span class="btn-sign">-</span>
+
+                </button>
+
+                </div>
+
             </td>
         `;
     }
 
-        
+    function deleteRow(button){
+
+        let row = button.closest("tr");
+
+        row.remove();
+
+        calculateTotal();
+    }
+
     function calculateTotal() {
         let qtys = document.getElementsByName("qty[]");
         let meters = document.getElementsByName("meter[]");
-
-        let totalQty = 0;
-        let totalMeter = 0;
+        let totalQty = 0, totalMeter = 0;
 
         for (let i = 0; i < qtys.length; i++) {
             totalQty += parseFloat(qtys[i].value) || 0;
@@ -372,450 +1835,1038 @@
 
         document.getElementById("totalQty").innerText = totalQty;
         document.getElementById("totalMeter").innerText = totalMeter.toFixed(2);
-
         document.getElementById("hiddenTotalQty").value = totalQty;
-
         document.getElementById("hiddenTotalMeter").value = totalMeter.toFixed(2);
     }
 
+    function updateSizes() {
+        let item = document.getElementById("itemSelect").value;
+        let sizes = sizeMap[item] || [];
+        document.getElementsByName("size[]").forEach(s => {
+            s.innerHTML = "<option value=''>Select</option>";
+            sizes.forEach(size => s.innerHTML += `<option>${size}</option>`);
+        });
+    }
+
+    function clearFormData() {
+        document.querySelector("form").reset();
+        document.getElementById("address").value = "";
+        document.getElementById("totalQty").innerText = "0";
+        document.getElementById("totalMeter").innerText = "0";
+        document.getElementById("date").value = new Date().toISOString().split('T')[0];
+        document.getElementById("slipNoInput").value = {{slip_no}};
+
+        let table = document.getElementById("sizeTable");
+        while (table.rows.length > 2) table.deleteRow(2);
+        updateSizes();
+    }
+
+    function validateForm() {
+        let party = document.getElementById("partySelect");
+        let item = document.getElementById("itemSelect");
+        let valid = true;
+
+        if (party.value === "") { party.style.border = "2px solid red"; valid = false; }
+        if (item.value === "") { item.style.border = "2px solid red"; valid = false; }
+
+        document.getElementsByName("size[]").forEach(s => {
+            if (s.value === "") { s.style.border = "2px solid red"; valid = false; }
+        });
+
+        document.getElementsByName("qty[]").forEach(q => {
+            if (q.value === "") { q.style.border = "2px solid red"; valid = false; }
+        });
+
+        if (!valid) alert("Please fill required fields");
+        return valid;
+    }
+
     function printSlip() {
-
-        document.getElementById("p_slip").innerText =
-            document.getElementById("slipNoInput").value;
-
-        document.getElementById("p_date").innerText =
-            document.querySelector("input[name='date']").value;
-
-        document.getElementById("p_party").innerText =
-            document.querySelector("select[name='party']").value;
-
-        document.getElementById("p_address").innerText =
-            document.getElementById("address").value;
-
-        document.getElementById("p_cloth").innerText =
-            document.getElementById("cloth").value;
-
-        document.getElementById("p_item").innerText =
-            document.querySelector("select[name='item']").value;
+        document.getElementById("p_slip").innerText = document.getElementById("slipNoInput").value;
+        document.getElementById("p_date").innerText = document.getElementById("date").value;
+        document.getElementById("p_party").innerText = document.getElementById("partySelect").value;
+        document.getElementById("p_address").innerText = document.getElementById("address").value;
+        document.getElementById("p_cloth").innerText = document.getElementById("cloth").value;
+        document.getElementById("p_item").innerText = document.getElementById("itemSelect").value;
+        document.getElementById("p_remark").innerText = document.querySelector("textarea[name='remark']").value;
 
         let sizes = document.getElementsByName("size[]");
         let qtys = document.getElementsByName("qty[]");
         let meters = document.getElementsByName("meter[]");
-
         let tableHTML = "";
 
         for (let i = 0; i < sizes.length; i++) {
             if (sizes[i].value || qtys[i].value || meters[i].value) {
                 tableHTML += `
                     <tr>
-                        <td class="size-col">${sizes[i].value}</td>
-
-                        <td class="qty-col">
-                            ${qtys[i].value}
-                        </td>
-
-                        <td class="mtr-col">
-                            ${meters[i].value}
+                        <td style="padding:4px;">${sizes[i].value}</td>
+                        <td style="text-align:center;">${qtys[i].value}</td>
+                        <td style="text-align:right;">
+                            ${parseFloat(meters[i].value || 0).toFixed(2)}
                         </td>
                     </tr>
-                    `;
+                `;
             }
         }
 
         document.getElementById("p_table").innerHTML = tableHTML;
+        document.getElementById("p_total_qty").innerText = document.getElementById("totalQty").innerText;
+        document.getElementById("p_total_meter").innerText = document.getElementById("totalMeter").innerText;
+        let remarkBox =
+            document.getElementById("remark");
 
-        document.getElementById("p_total_qty").innerText =
-            "Total Qty: " + document.getElementById("totalQty").innerText;
-
-        document.getElementById("p_total_meter").innerText =
-            "Total Meter: " + document.getElementById("totalMeter").innerText;
+        document.getElementById("p_remark").innerText =
+            remarkBox ? remarkBox.value : "";
 
         let content = document.getElementById("printArea").innerHTML;
-
         let win = window.open("", "", "width=400,height=600");
-
-        win.document.write(`
-            <html>
-            <head>
-                <title>Print</title>
-                <style>
-                    body {
-                        font-family: monospace;
-                        p {
-                            white-space: pre;
-                        }
-                        font-size: 11px;
-                        width: 260px;
-                        margin: auto;
-                    }
-
-                    h2, h3 {
-                        text-align: center;
-                        margin: 2px 0;
-                    }
-
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
-                    }
-
-                    th, td {
-                        border-bottom: 1px dashed black;
-                        padding: 3px;
-                        text-align: center;
-                    }
-
-                    p {
-                        margin: 3px 0;
-                    }
-                        width: 250px;
-                        margin: auto;
-                        word-wrap: break-word;
-                    }
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
-                    }
-
-                    th {
-                        border-bottom: 1px dashed black;
-                        padding: 4px;                       
-                    }
-
-                    td {
-                        padding: 2px 0;
-                        border: none;
-                        text-align: left;
-                    }
-                    th, td { padding: 4px; text-align: center; }
-
-                    table {
-                        width: 100%;
-                        border-collapse: collapse;
-                    }
-
-                    .label {
-                        width: 70px;
-                        font-weight: bold;
-                        text-align: left;
-                    }
-
-                    .colon {
-                        width: 10px;
-                        text-align: center;
-                    }
-                    
-                    .info-table td {
-                        text-align: left;
-                    }
-
-                    .size-table {
-                        width: 100%;
-                        table-layout: fixed;
-                        border-collapse: collapse;
-                    }
-
-                    .size-table th {
-                        border-bottom: 1px dashed black;
-                        padding: 4px;
-                        font-weight: bold;
-                    }
-
-                    .size-table td {
-                        padding: 2px 4px;
-                    }
-
-                    .size-table th:nth-child(1),
-                    .size-table td:nth-child(1) {
-                        width: 40%;
-                        text-align: center;
-                    }
-
-                    .size-table th:nth-child(2),
-                    .size-table td:nth-child(2) {
-                        width: 25%;
-                        text-align: right;
-                        padding-right: 12px;
-                    }
-
-                    .size-table th:nth-child(3),
-                    .size-table td:nth-child(3) {
-                        width: 35%;
-                        text-align: right;
-                        padding-right: 6px;
-                    }
-
-                    .size-col {
-                        width: 80px;
-                        text-align: center;
-                    }
-
-                    .qty-col,
-                    .qty-col th,
-                    .qty-col td {
-                        width: 70px;
-                        text-align: right !important;
-                        padding-right: 10px;
-                    }
-
-                    .mtr-col,
-                    .mtr-col th,
-                    .mtr-col td {
-                        width: 90px;
-                        text-align: right !important;
-                        padding-right: 5px;
-                    }
-
-                        .size-col {
-                            text-align: center;
-                        }
-
-                    td {
-                        padding: 2px 0;
-                        border: none;
-                        text-align: left;
-                    }
-                    .size-col {
-                        text-align: center;
-                    }
-
-                    .qty-col,
-                    .mtr-col {
-                        text-align: right !important;
-                        padding-right: 8px;
-                    }
-                </style>
-            </head>
-            <body>${content}</body>
-            </html>
-        `);
-
+        win.document.write(`<html><head><title>Print</title><style>body{font-family:monospace;width:260px;margin:auto;font-size:11px;}h2,h3{text-align:center;margin:2px 0;}table{width:100%;border-collapse:collapse;}th,td{border-bottom:1px dashed black;padding:3px;}</style></head><body>${content}</body></html>`);
         win.document.close();
         win.print();
-
-        setTimeout(() => {
-            location.reload();
-        }, 500);
-    }
-    
-    let sizeMap = {{ size_map | tojson }};
-        
-    function updateSizes() {
-        let item = document.querySelector("select[name='item']").value;
-        let sizes = sizeMap[item] || [];
-
-        let selects = document.getElementsByName("size[]");
-
-        for (let s of selects) {
-            s.innerHTML = "<option value=''>Select</option>";
-            sizes.forEach(size => {
-                s.innerHTML += `<option>${size}</option>`;
-            });
-        }
+        setTimeout(() => location.reload(), 500);
     }
 
-    document.querySelector("select[name='item']")
-        .addEventListener("change", updateSizes);
-    
-    let partyData = {{ party_data | tojson }};
-
-    document.querySelector("select[name='party']")
-    .addEventListener("change", function () {
-
-        let party = this.value;
-
-        document.getElementById("address").value =
-            partyData[party] || "";
+    // PARTY
+    document.getElementById("partySelect").addEventListener("change", function() {
+        document.getElementById("address").value = partyData[this.value] || "";
     });
 
-    window.onload = function () {
+    document.getElementById("itemSelect").addEventListener("change", updateSizes);
 
-        let today = new Date().toISOString().split('T')[0];
 
-        document.getElementById("date").value = today;
-        
-        // Set the slip number
-        document.getElementById("slipNoInput").value = {{slip_no}};
+    function openPartyPopup() {
 
-        updateSizes();
+        document.getElementById(
+            "editingPartyId"
+        ).value = "";
 
-        // auto load first party
-        document.getElementById("address").value = "";
-};
+        document.getElementById(
+            "newPartyName"
+        ).value = "";
 
-    function clearFormData() {
+        document.getElementById(
+            "newPartyAddress"
+        ).value = "";
 
-        document.querySelector("form").reset();
+        document.getElementById(
+            "partySearch"
+        ).value = "";
 
-        document.getElementById("address").value = "";
+        document.getElementById(
+            "partyPopup"
+        ).style.display = "block";
 
-        document.getElementById("totalQty").innerText = "0";
-        document.getElementById("totalMeter").innerText = "0";
+        showPopupOverlay();
 
-        let table = document.getElementById("sizeTable");
-
-        while (table.rows.length > 2) {
-            table.deleteRow(2);
-        }
-
-        updateSizes();
-
-        let today = new Date().toISOString().split('T')[0];
-        document.getElementById("date").value = today;
-        
-        // Reset slip number
-        document.getElementById("slipNoInput").value = {{slip_no}};
+        loadPartyList();
     }
 
-    function validateForm() {
-
-        let party = document.querySelector("select[name='party']");
-        let item = document.querySelector("select[name='item']");
-        let sizes = document.getElementsByName("size[]");
-        let qtys = document.getElementsByName("qty[]");
-
-        let valid = true;
-
-        // reset borders
-        party.style.border = "";
-        item.style.border = "";
-
-        sizes.forEach(s => s.style.border = "");
-        qtys.forEach(q => q.style.border = "");
-
-        // Party validation
-        if (party.value === "") {
-            party.style.border = "2px solid red";
-            party.focus();
-            valid = false;
-        }
-
-        // Item validation
-        if (item.value === "") {
-            item.style.border = "2px solid red";
-            item.focus();
-            valid = false;
-        }
-
-        // Size + Qty validation
-        for (let i = 0; i < sizes.length; i++) {
-
-            if (sizes[i].value === "") {
-                sizes[i].style.border = "2px solid red";
-                valid = false;
-            }
-
-            if (qtys[i].value === "") {
-                qtys[i].style.border = "2px solid red";
-                valid = false;
-            }
-        }
-
-        if (!valid) {
-            alert("Please fill required fields");
-        }
-
-        return valid;
+    function closePartyPopup() { 
+        document.getElementById("partyPopup").style.display = "none";
+        hidePopupOverlay();
     }
-    
-    let historyData = {{ history | tojson }};
 
-    function viewSlip(index){
-
-        let slip = historyData[index];
+    async function saveParty() {
+        let name = document.getElementById("newPartyName").value;
+        let address = document.getElementById("newPartyAddress").value;
         
-        // Calculate slip_no based on position (latest = highest number)
-        let slipNo = historyData.length - index;
+        if (!name) { 
+            showToast("❌ Party Name is required", "#e74c3c");
+            return; 
+        }
+        
+        if (!address) { 
+            showToast("❌ Party Address is required", "#e74c3c");
+            return; 
+        }
+        
+        let response = await fetch("/save_party", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ party: name, address: address })
+        });
+        let result = await response.json();
+        if (result.status === "success") {
 
-        document.getElementById("popupContent").innerHTML = `
+            showToast("✅ Party Saved");
 
-        <h3>Slip No : ${slipNo}</h3>
+            closePartyPopup();
 
-        <p><b>Date:</b> ${slip.date || ""}</p>
+            setTimeout(() => {
 
-        <p><b>Party:</b> ${slip.party || ""}</p>
+                location.reload();
 
-        <p><b>Address:</b> ${slip.address || ""}</p>
-
-        <p><b>Cloth:</b> ${slip.cloth || ""}</p>
-
-        <p><b>School:</b> ${slip.school || ""}</p>
-
-        <p><b>Item:</b> ${slip.item || ""}</p>
-
-        <hr>
-
-        <div style="display:flex; font-weight:bold; margin-bottom:5px;">
-            <div style="width:33%;">Size</div>
-            <div style="width:33%; text-align:center;">Qty</div>
-            <div style="width:33%; text-align:right;">Mtr</div>
-        </div>
-
-        ${(slip.sizes || []).map((size, idx) => `
-
-        <div style="display:flex; margin-bottom:4px;">
-
-            <div style="width:33%;">
-                ${size}
-            </div>
-
-            <div style="width:33%; text-align:center;">
-                ${(slip.qtys || [])[idx] || ""}
-            </div>
-
-            <div style="width:33%; text-align:right;">
-                ${parseFloat((slip.meters || [])[idx] || 0).toFixed(2)}
-            </div>
-
-        </div>
-
-        `).join("")}
-
-        <hr>
-
-        <p>
-        <b>Total Qty:</b>
-        ${slip.total_qty || 0}
-        </p>
-
-        <p>
-        <b>Total Meter:</b>
-        ${slip.total_meter || 0}
-        </p>
-
-        <button type="button" onclick="printOldSlip(${index})">
-            Print
-        </button>
-        `;
-
-        document.getElementById("historyPopup").style.display = "block";
+            }, 1500);
+        }
     }
 
-    function closePopup(){
-        document.getElementById("historyPopup").style.display = "none";
-}
-    function printOldSlip(index){
+    // CLOTH
+    function openClothPopup() {
 
-        let slip = historyData[index];
+        document.getElementById(
+            "clothPopup"
+        ).style.display = "block";
 
-        let rows = "";
+        showPopupOverlay();
 
-        (slip.sizes || []).forEach((size, i) => {
+        loadClothList();
+    }
+    function closeClothPopup() { 
+        document.getElementById("clothPopup").style.display = "none";
+        hidePopupOverlay();
+    }
 
-            rows += `
-            <tr>
-                <td>${size || ""}</td>
-                <td style="text-align:center;">
-                    ${(slip.qtys || [])[i] || ""}
-                </td>
-                <td style="text-align:right;">
-                    ${(slip.meters || [])[i] || ""}
-                </td>
-            </tr>
+    async function saveCloth() {
+        let cloth = document.getElementById("newCloth").value;
+        if (!cloth) { alert("Enter Cloth Name"); return; }
+        let response = await fetch("/save_cloth", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ cloth: cloth })
+        });
+        let result = await response.json();
+        if (result.status === "success") {
+
+            showToast("✅ Cloth Saved");
+
+            closeClothPopup();
+
+            setTimeout(() => {
+
+                location.reload();
+
+            }, 1500);
+        }
+    }
+
+    function loadClothList() {
+
+        let tbody = document.getElementById(
+            "clothListBody"
+        );
+
+        tbody.innerHTML = "";
+
+        clothList.forEach(name => {
+
+            tbody.innerHTML += `
+
+                <tr onclick="selectClothRow('${name}')"
+                style="
+                    cursor:pointer;
+                    border-bottom:1px solid #eee;
+                ">
+
+                    <td style="padding:8px;">
+                        ${name}
+                    </td>
+
+                </tr>
             `;
         });
+    }
+
+    function selectClothRow(name) {
+
+        document.getElementById(
+            "editingClothId"
+        ).value = name;
+
+        document.getElementById(
+            "newCloth"
+        ).value = name;
+    }
+
+    function filterClothList() {
+
+        let search = document
+            .getElementById("clothSearch")
+            .value
+            .toLowerCase();
+
+        let rows = document.querySelectorAll(
+            "#clothListBody tr"
+        );
+
+        rows.forEach(row => {
+
+            if(
+                row.innerText
+                    .toLowerCase()
+                    .includes(search)
+            ){
+
+                row.style.display = "";
+
+            } else {
+
+                row.style.display = "none";
+            }
+        });
+    }
+
+    async function updateCloth() {
+
+        let oldName = document
+            .getElementById("editingClothId")
+            .value;
+
+        let newName = document
+            .getElementById("newCloth")
+            .value;
+
+        if(!oldName){
+
+            showToast(
+                "Select Cloth First",
+                "#e74c3c"
+            );
+
+            return;
+        }
+
+        let response = await fetch(
+            "/update_cloth",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    old_name:oldName,
+
+                    new_name:newName
+                })
+            }
+        );
+
+        let result = await response.json();
+
+        if(result.status === "success"){
+
+            showToast(
+                "✅ Cloth Updated",
+                "#27ae60"
+            );
+
+            setTimeout(() => {
+
+                location.reload();
+
+            },1000);
+        }
+    }
+
+    async function deleteCloth() {
+
+        let clothName = document
+            .getElementById("editingClothId")
+            .value;
+
+        if(!clothName){
+
+            showToast(
+                "Select Cloth First",
+                "#e74c3c"
+            );
+
+            return;
+        }
+
+        if(!confirm(
+            "Delete this cloth?"
+        )) return;
+
+        let response = await fetch(
+            "/delete_cloth",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    cloth_name:clothName
+                })
+            }
+        );
+
+        let result = await response.json();
+
+        if(result.status === "success"){
+
+            showToast(
+                "✅ Cloth Deleted",
+                "#27ae60"
+            );
+
+            setTimeout(() => {
+
+                location.reload();
+
+            },1000);
+
+        }else{
+
+            showToast(
+                "❌ " + result.message,
+                "#e74c3c"
+            );
+        }
+    }
+
+    // SCHOOL
+    function openSchoolPopup() {
+
+        document.getElementById(
+            "editingSchoolId"
+        ).value = "";
+
+        document.getElementById(
+            "newSchool"
+        ).value = "";
+
+        document.getElementById(
+            "schoolSearch"
+        ).value = "";
+
+        document.getElementById(
+            "schoolPopup"
+        ).style.display = "block";
+
+        showPopupOverlay();
+
+        loadSchoolList();
+    }
+    function closeSchoolPopup() { 
+        document.getElementById("schoolPopup").style.display = "none";
+        hidePopupOverlay();
+    }
+
+    async function saveSchool() {
+        let school = document.getElementById("newSchool").value;
+        if (!school) { alert("Enter School Name"); return; }
+        let response = await fetch("/save_school", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ school: school })
+        });
+        let result = await response.json();
+        if (result.status === "success") {
+
+            showToast("✅ School Saved");
+
+            closeSchoolPopup();
+
+            setTimeout(() => {
+
+                location.reload();
+
+            }, 1500);
+        }
+    }
+
+    // ITEM
+    function openItemPopup() {
+
+        document.getElementById(
+            "editingItemId"
+        ).value = "";
+
+        document.getElementById(
+            "newItem"
+        ).value = "";
+
+        document.getElementById(
+            "newSizes"
+        ).value = "";
+
+        document.getElementById(
+            "itemSearch"
+        ).value = "";
+
+        document.getElementById(
+            "itemPopup"
+        ).style.display = "block";
+
+        showPopupOverlay();
+
+        loadItemList();
+    }
+    function closeItemPopup() { 
+        document.getElementById("itemPopup").style.display = "none";
+        hidePopupOverlay();
+    }
+
+    async function saveItem() {
+        let item = document.getElementById("newItem").value;
+        let sizes = document.getElementById("newSizes").value;
+        
+        if (!item) { 
+            showToast("❌ Item Name is required", "#e74c3c");
+            return; 
+        }
+        
+        if (!sizes) { 
+            showToast("❌ Item Sizes are required (Example: 28,30,32,34)", "#e74c3c");
+            return; 
+        }
+        
+        let response = await fetch("/save_item", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ item: item, sizes: sizes })
+        });
+        let result = await response.json();
+        if (result.status === "success") {
+
+            showToast("✅ Item Saved");
+
+            closeItemPopup();
+
+            setTimeout(() => {
+
+                location.reload();
+
+            }, 1500);
+        } else {
+
+            showToast("❌ " + (result.message || "Failed to save item"), "#e74c3c");
+        }
+    }
+
+    function loadItemList() {
+
+        let tbody = document.getElementById(
+            "itemListBody"
+        );
+
+        tbody.innerHTML = "";
+
+        itemList.forEach(name => {
+
+            tbody.innerHTML += `
+
+                <tr onclick="selectItemRow('${name}')"
+                style="
+                    cursor:pointer;
+                    border-bottom:1px solid #eee;
+                ">
+
+                    <td style="padding:8px;">
+                        ${name}
+                    </td>
+
+                </tr>
+            `;
+        });
+    }
+
+    function selectItemRow(name) {
+
+        document.getElementById(
+            "editingItemId"
+        ).value = name;
+
+        document.getElementById(
+            "newItem"
+        ).value = name;
+
+        document.getElementById(
+            "newSizes"
+        ).value = (sizeMap[name] || []).join(",");
+    }
+
+    function filterItemList() {
+
+        let search = document
+            .getElementById("itemSearch")
+            .value
+            .toLowerCase();
+
+        let rows = document.querySelectorAll(
+            "#itemListBody tr"
+        );
+
+        rows.forEach(row => {
+
+            if(
+                row.innerText
+                    .toLowerCase()
+                    .includes(search)
+            ){
+
+                row.style.display = "";
+
+            } else {
+
+                row.style.display = "none";
+            }
+        });
+    }
+
+    async function updateItem() {
+
+        let oldName = document
+            .getElementById("editingItemId")
+            .value;
+
+        let newName = document
+            .getElementById("newItem")
+            .value;
+
+        let sizes = document
+            .getElementById("newSizes")
+            .value;
+
+        if(!oldName){
+
+            showToast(
+                "Select Item First",
+                "#e74c3c"
+            );
+
+            return;
+        }
+
+        if(!newName){
+
+            showToast(
+                "Item Name is required",
+                "#e74c3c"
+            );
+
+            return;
+        }
+
+        if(!sizes){
+
+            showToast(
+                "Item Sizes are required (Example: 28,30,32,34)",
+                "#e74c3c"
+            );
+
+            return;
+        }
+
+        let response = await fetch(
+            "/update_item",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    old_item:oldName,
+
+                    new_item:newName,
+
+                    sizes:sizes
+                })
+            }
+        );
+
+        let result = await response.json();
+
+        if(result.status === "success"){
+
+            showToast(
+                "✅ Item Updated"
+            );
+
+            setTimeout(() => {
+
+                location.reload();
+
+            },1000);
+
+        }else{
+
+            showToast(
+                "❌ " + result.message,
+                "#e74c3c"
+            );
+        }
+    }
+
+    async function deleteItem() {
+
+        let itemName = document
+            .getElementById("editingItemId")
+            .value;
+
+        if(!itemName){
+
+            showToast(
+                "Select Item First",
+                "#e74c3c"
+            );
+
+            return;
+        }
+
+        if(!confirm(
+            "Delete this item?"
+        )) return;
+
+        let response = await fetch(
+            "/delete_item",
+            {
+                method:"POST",
+
+                headers:{
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+
+                    item_name:itemName
+                })
+            }
+        );
+
+        let result = await response.json();
+
+        if(result.status === "success"){
+
+            showToast(
+                "✅ Item Deleted"
+            );
+
+            setTimeout(() => {
+
+                location.reload();
+
+            },1000);
+
+        }else{
+
+            showToast(
+                "❌ " + result.message,
+                "#e74c3c"
+            );
+        }
+    }
+
+    // HISTORY
+    function viewSlip(slipNo) {
+        let slip = historyData.find(s => s.slip_no == slipNo);
+        if (!slip) { alert("Slip not found"); return; }
+
+        let cancelledText = slip.status === "Cancelled" ? 
+            `<div style="background:#ffdddd;color:red;padding:8px;border-radius:6px;font-weight:bold;margin-bottom:10px;text-align:center;">❌ CANCELLED SLIP</div>` : "";
+
+        // Hide print button for cancelled slips
+        let printButton = slip.status === "Cancelled" ? 
+            `<button type="button" disabled style="width:100%;background:#999;color:white;padding:8px;border:none;border-radius:4px;margin-bottom:10px;cursor:not-allowed;opacity:0.6;">🖨 Print (Not Available)</button>` :
+            `<button type="button" onclick="printOldSlip('${slipNo}')" style="width:100%;background:#3498db;color:white;padding:8px;border:none;border-radius:4px;margin-bottom:10px;">🖨 Print</button>`;
+
+        document.getElementById("popupContent").innerHTML = `
+            ${cancelledText}
+            <h3>Slip No : ${slipNo}</h3>
+            <p style="margin-bottom:8px;"><b>Date:</b> ${slip.date || ""}</p>
+
+            <p style="margin-bottom:8px;"><b>Party:</b> ${slip.party || ""}</p>
+
+            <p style="margin-bottom:8px;"><b>Address:</b> ${slip.address || ""}</p>
+
+            <p style="margin-bottom:8px;"><b>Cloth:</b> ${slip.cloth || ""}</p>
+
+            <p style="margin-bottom:8px;"><b>School:</b> ${slip.school || ""}</p>
+
+            <p style="margin-bottom:8px;"><b>Item:</b> ${slip.item || ""}</p>
+            <hr>
+            <div style="display:flex;font-weight:bold;margin-bottom:5px;"><div style="width:33%;">Size</div><div style="width:33%;text-align:right; padding-right:10px;">Qty</div><div style="width:33%;text-align:right;">Mtr</div></div>
+            ${(slip.sizes || []).map((size, idx) => `
+                <div style="display:flex;margin-bottom:4px;"><div style="width:33%;">${size}</div><div style="width:33%;text-align:right; padding-right:10px;">${(slip.qtys || [])[idx] || ""}</div><div style="width:33%;text-align:right;">${parseFloat((slip.meters || [])[idx] || 0).toFixed(2)}</div></div>
+            `).join("")}
+            <hr>
+            <p style="margin-bottom:8px;">
+                <b>Total Qty:</b> ${slip.total_qty || 0}
+            </p>
+
+            <p style="margin-bottom:8px;">
+                <b>Total Meter:</b> ${slip.total_meter || 0}
+            </p>
+
+            <p style="margin-bottom:8px;">
+                <b>Remark:</b>
+            </p>
+            <p style="white-space:pre-line; margin-bottom:10px;">
+                ${slip.remark || ""}
+            </p>
+            ${printButton}
+        `;
+        document.getElementById("historyPopup").style.display = "block";
+        showPopupOverlay();
+    }
+
+    function editSlip(slipNo) {
+        let slip = historyData.find(s => s.slip_no == slipNo);
+        if (!slip) { alert("Slip not found"); return; }
+        if (slip.status === "Cancelled") { alert("Cancelled slip cannot be edited."); return; }
+
+        document.getElementById("slipNoInput").value = slip.slip_no || "";
+        let dateValue = slip.date;
+        if (dateValue && dateValue.includes("-")) {
+            let parts = dateValue.split("-");
+            if (parts[0].length === 2) dateValue = parts[2] + "-" + parts[1] + "-" + parts[0];
+        }
+        document.getElementById("date").value = dateValue;
+        document.getElementById("partySelect").value = slip.party || "";
+        document.getElementById("address").value = slip.address || "";
+        document.getElementById("cloth").value = slip.cloth || "";
+        document.getElementById("school").value = slip.school || "";
+        document.getElementById("itemSelect").value = slip.item || "";
+        document.querySelector("textarea[name='remark']").value = slip.remark || "";
+
+        updateSizes();
+
+        let table = document.getElementById("sizeTable");
+        while (table.rows.length > 2) table.deleteRow(2);
+
+        let firstSize = document.getElementsByName("size[]")[0];
+        let firstQty = document.getElementsByName("qty[]")[0];
+        let firstMeter = document.getElementsByName("meter[]")[0];
+
+        firstSize.value = (slip.sizes || [])[0] || "";
+        firstQty.value = (slip.qtys || [])[0] || "";
+        firstMeter.value = (slip.meters || [])[0] || "";
+
+        for (let i = 1; i < (slip.sizes || []).length; i++) {
+            addRow();
+            let sizes = document.getElementsByName("size[]");
+            let qtys = document.getElementsByName("qty[]");
+            let meters = document.getElementsByName("meter[]");
+            sizes[i].value = slip.sizes[i] || "";
+            qtys[i].value = slip.qtys[i] || "";
+            meters[i].value = slip.meters[i] || "";
+        }
+
+        calculateTotal();
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function printOldSlip(slipNo) {
+        let slip = historyData.find(s => s.slip_no == slipNo);
+        
+        // Check if cancelled
+        if(slip && slip.status === "Cancelled"){
+            showToast("❌ Cannot print cancelled slip","#e74c3c");
+            return;
+        }
+        
+        let rows = (slip.sizes || []).map((size, i) => `
+            <tr><td style="padding:6px;">${size || ""}</td><td style="text-align:right; padding-right:10px;">${(slip.qtys || [])[i] || ""}</td><td style="text-align:right;">${parseFloat((slip.meters || [])[i] || 0).toFixed(2)}</td></tr>
+        `).join("");
 
         let content = `
+
+        <html>
+
+        <head>
+
+        <title>Print</title>
+
+        <style>
+
+        body{
+            font-family:monospace;
+            width:300px;
+            margin:auto;
+            padding:10px;
+            font-size:13px;
+            line-height:1.5;
+        }
+
+        h2,h3{
+            text-align:center;
+            margin:2px 0;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+            margin-top:5px;
+        }
+
+        th,td{
+            padding:4px 2px;
+        }
+
+        </style>
+
+        </head>
+
+        <body>
+
+        <h2>SARVODAY STORES</h2>
+
+        <h3>CUTTING SLIP</h3>
+
+        <table style="width:100%;margin-top:10px;">
+
+        <tr>
+            <td style="width:90px;">
+                <b>Slip No</b>
+            </td>
+
+            <td>
+                : ${slip.slip_no || ""}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <b>Date</b>
+            </td>
+
+            <td>
+                : ${slip.date || ""}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <b>Party</b>
+            </td>
+
+            <td>
+                : ${slip.party || ""}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <b>Address</b>
+            </td>
+
+            <td>
+                : ${slip.address || ""}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <b>Cloth</b>
+            </td>
+
+            <td>
+                : ${slip.cloth || ""}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <b>School</b>
+            </td>
+
+            <td>
+                : ${slip.school || ""}
+            </td>
+        </tr>
+
+        <tr>
+            <td>
+                <b>Item</b>
+            </td>
+
+            <td>
+                : ${slip.item || ""}
+            </td>
+        </tr>
+
+        </table>
+
+        <hr>
+
+        <table style="
+            width:100%;
+            border-collapse:collapse;
+        ">
+
+        <thead>
+
+        <tr>
+
+        <th style="text-align:left;">
+            Size
+        </th>
+
+        <th style="
+            text-align:right;
+            padding-right:10px;
+        ">
+            Qty
+        </th>
+
+        <th style="text-align:right;">
+            Mtr
+        </th>
+
+        </tr>
+
+        </thead>
+
+        <tbody>
+
+        ${rows}
+
+        </tbody>
+
+        </table>
+
+        <hr>
+
+        <p>
+            <b>Total Qty:</b>
+            ${slip.total_qty || 0}
+        </p>
+
+        <p>
+            <b>Total Meter:</b>
+            ${slip.total_meter || 0}
+        </p>
+
+        <p>
+
+            <b>Remark:</b><br>
+
+            <span style="white-space:pre-line;">
+
+                ${slip.remark || ""}
+
+            </span>
+
+        </p>
+
+        <p style="text-align:center;">
+
+            --- Thank You ---
+
+        </p>
+
+        </body>
+
+        </html>
+
+        `;
+
+        let win = window.open(
+            "",
+            "",
+            "width=400,height=700"
+        );
+
+        win.document.write(`
         <html>
 
         <head>
@@ -824,33 +2875,38 @@
 
         <style>
 
+        body{
+            font-family: monospace;
+            width:72mm;
+            margin:auto;
+            padding:5px;
+            font-size:11px;
+        }
+
+        table{
+            width:100%;
+            border-collapse:collapse;
+        }
+
+        th,td{
+            padding:3px;
+        }
+
+        th{
+            border-bottom:1px dashed black;
+        }
+
+        @media print{
+
             body{
-                font-family: monospace;
-                width:300px;
-                margin:auto;
-                padding:10px;
-                font-size:13px;
-                line-height:1.5;
+                width:72mm;
             }
 
-            h2,h3{
-                text-align:center;
-                margin:2px 0;
+            @page{
+                size:80mm auto;
+                margin:2mm;
             }
-
-            table{
-                width:100%;
-                border-collapse:collapse;
-                margin-top:5px;
-            }
-
-            th,td{
-                padding:4px 2px;
-            }
-
-            .right{
-                text-align:right;
-            }
+        }
 
         </style>
 
@@ -858,130 +2914,889 @@
 
         <body>
 
-            <h2>SARVODAY STORES</h2>
-
-            <h3>CUTTING SLIP</h3>
-
-            <table style="width:100%; margin-top:10px;">
-
-            <tr>
-                <td style="width:90px;"><b>Slip No</b></td>
-                <td>: ${slip.slip_no || ""}</td>
-            </tr>
-
-            <tr>
-                <td><b>Date</b></td>
-                <td>: ${slip.date || ""}</td>
-            </tr>
-
-            <tr>
-                <td><b>Party</b></td>
-                <td>: ${slip.party || ""}</td>
-            </tr>
-
-            <tr>
-                <td><b>Address</b></td>
-                <td>: ${slip.address || ""}</td>
-            </tr>
-
-            <tr>
-                <td><b>Cloth</b></td>
-                <td>: ${slip.cloth || ""}</td>
-            </tr>
-
-            <tr>
-                <td><b>School</b></td>
-                <td>: ${slip.school || ""}</td>
-            </tr>
-
-            <tr>
-                <td><b>Item</b></td>
-                <td>: ${slip.item || ""}</td>
-            </tr>
-
-            </table>
-
-            <hr>
-
-            <table style="width:100%; border-collapse:collapse;">
-
-                <thead>
-                    <tr>
-
-                        <th style="text-align:left;">
-                            Size
-                        </th>
-
-                        <th style="text-align:center;">
-                            Qty
-                        </th>
-
-                        <th style="text-align:right;">
-                            Mtr
-                        </th>
-
-                    </tr>
-                </thead>
-
-                <tbody>
-
-                    ${rows}
-
-                </tbody>
-
-            </table>
-
-            <hr>
-
-            <p>
-                <b>Total Qty:</b>
-                ${slip.total_qty || 0}
-            </p>
-
-            <p>
-                <b>Total Meter:</b>
-                ${slip.total_meter || 0}
-            </p>
-
-            <p style="text-align:center;">
-                --- Thank You ---
-            </p>
+        ${content}
 
         </body>
 
         </html>
-        `;
-
-        let win = window.open("", "", "width=400,height=700");
-
-        win.document.write(content);
+        `);
 
         win.document.close();
 
         win.focus();
 
         setTimeout(() => {
+
             win.print();
+
         }, 500);
     }
+
+    function closeHistoryPopup() { 
+        document.getElementById("historyPopup").style.display = "none";
+        hidePopupOverlay();
+    }
+
+    function cancelSlip(slipNo) {
+        if (confirm("Cancel this slip?")) window.location.href = "/cancel_slip/" + slipNo;
+    }
+
+    function filterHistory() {
+
+        let search = document
+            .getElementById("historySearch")
+            .value
+            .toLowerCase()
+            .trim();
+
+        let rows = document.querySelectorAll(
+            "#historyTableBody tr"
+        );
+
+        rows.forEach(row => {
+
+            let slipNo = row.cells[0].innerText.toLowerCase();
+
+            let party = row.cells[2].innerText.toLowerCase();
+
+            let school = row.cells[3].innerText.toLowerCase();
+
+            if (
+                slipNo.includes(search) ||
+                party.includes(search) ||
+                school.includes(search)
+            ) {
+
+                row.style.display = "";
+
+            } else {
+
+                row.style.display = "none";
+            }
+        });
+    }
+
+    function resetHistorySearch() {
+
+        document.getElementById(
+            "historySearch"
+        ).value = "";
+
+        filterHistory();
+    }
+
+    function toggleHistory() {
+
+        let panel = document.querySelector(".right-panel");
+
+        let leftPanel = document.querySelector(".left-panel");
+
+        if (panel.style.display === "none") {
+
+            panel.style.display = "flex";
+
+            leftPanel.style.width = "30%";
+
+        } else {
+
+            panel.style.display = "none";
+
+            leftPanel.style.width = "50%";
+        }
+    }
+
+    function showToast(message, color="#27ae60") {
+
+        let toast = document.getElementById("toast");
+
+        toast.innerText = message;
+
+        toast.style.background = color;
+
+        toast.style.display = "block";
+
+        setTimeout(() => {
+
+            toast.style.display = "none";
+
+        }, 2500);
+    }
+
+    function downloadPDF(slipNo){
+
+        window.location.href =
+            "/download_pdf/" + slipNo;
+    }
+
+    document.addEventListener("input", function(e){
+
+        if(
+            e.target.tagName === "INPUT"
+        ){
+
+            let cursor = e.target.selectionStart;
+
+            e.target.value = e.target.value.toUpperCase();
+
+            e.target.setSelectionRange(cursor, cursor);
+        }
+
+    });
+
+    let selectedSlipNo = null;
+
+        function selectSlip(slipNo, row){
+
+            selectedSlipNo = slipNo;
+
+            document
+                .querySelectorAll("#historyTableBody tr")
+                .forEach(r => {
+
+                    r.classList.remove("selectedRow");
+
+                });
+
+            row.classList.add("selectedRow");
+        }
+
+        function viewSelectedSlip(){
+
+            if(!selectedSlipNo){
+
+                showToast("Select Slip First","#e74c3c");
+
+                return;
+            }
+
+            viewSlip(selectedSlipNo);
+        }
+
+        function editSelectedSlip(){
+
+            if(!selectedSlipNo){
+
+                showToast("Select Slip First","#e74c3c");
+
+                return;
+            }
+
+            editSlip(selectedSlipNo);
+        }
+
+        function cancelSelectedSlip(){
+
+            if(!selectedSlipNo){
+
+                showToast("Select Slip First","#e74c3c");
+
+                return;
+            }
+
+            cancelSlip(selectedSlipNo);
+        }
+
+        function pdfSelectedSlip(){
+
+            if(!selectedSlipNo){
+
+                showToast("Select Slip First","#e74c3c");
+
+                return;
+            }
+
+            // Check if slip is cancelled
+            let slip = historyData.find(s => s.slip_no == selectedSlipNo);
             
+            if(slip && slip.status === "Cancelled"){
+
+                showToast("❌ Cannot print cancelled slip","#e74c3c");
+
+                return;
+            }
+
+            downloadPDF(selectedSlipNo);
+        }
+        
+        function loadPartyList() {
+
+            let tbody = document.getElementById("partyListBody");
+
+            tbody.innerHTML = "";
+
+            Object.entries(partyData).forEach(([name, address]) => {
+
+                tbody.innerHTML += `
+
+                    <tr onclick="selectPartyRow(
+                        '${name}',
+                        '${address}'
+                    )"
+
+                    style="
+                        cursor:pointer;
+                        border-bottom:1px solid #eee;
+                    ">
+
+                        <td style="padding:8px;">
+                            ${name}
+                        </td>
+
+                    </tr>
+                `;
+            });
+        }
+
+        function selectPartyRow(name, address) { document.getElementById( "editingPartyId" ).value = name; document.getElementById( "newPartyName" ).value = name; document.getElementById( "newPartyAddress" ).value = address; }
+
+        function filterPartyList() {
+
+            let search = document
+                .getElementById("partySearch")
+                .value
+                .toLowerCase();
+
+            let rows = document.querySelectorAll(
+                "#partyListBody tr"
+            );
+
+            rows.forEach(row => {
+
+                if(
+                    row.innerText
+                        .toLowerCase()
+                        .includes(search)
+                ){
+
+                    row.style.display = "";
+
+                } else {
+
+                    row.style.display = "none";
+                }
+            });
+        }
+        
+        async function updateParty() {
+
+            let oldName = document
+                .getElementById("editingPartyId")
+                .value;
+
+            let newName = document
+                .getElementById("newPartyName")
+                .value;
+
+            let address = document
+                .getElementById("newPartyAddress")
+                .value;
+
+            if(!oldName){
+
+                showToast(
+                    "Select Party First",
+                    "#e74c3c"
+                );
+
+                return;
+            }
+
+            if(!newName){
+
+                showToast(
+                    "Party Name is required",
+                    "#e74c3c"
+                );
+
+                return;
+            }
+
+            if(!address){
+
+                showToast(
+                    "Party Address is required",
+                    "#e74c3c"
+                );
+
+                return;
+            }
+
+            let response = await fetch(
+                "/update_party",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        old_name:oldName,
+
+                        new_name:newName,
+
+                        address:address
+                    })
+                }
+            );
+
+            let result = await response.json();
+
+            if(result.status === "success"){
+
+                showToast(
+                    "✅ Party Updated",
+                    "#27ae60"
+                );
+
+                setTimeout(() => {
+
+                    location.reload();
+
+                },1000);
+
+            }else{
+
+                showToast(
+                    "❌ Party Already Used In Slips",
+                    "#e74c3c"
+                );
+            }
+        }
+
+        async function deleteParty() {
+
+            let partyName = document
+                .getElementById("editingPartyId")
+                .value;
+
+            if(!partyName){
+
+                showToast(
+                    "Select Party First",
+                    "#e74c3c"
+                );
+
+                return;
+            }
+
+            if(!confirm(
+                "Delete this party?"
+            )) return;
+
+            let response = await fetch(
+                "/delete_party",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        party_name:partyName
+                    })
+                }
+            );
+
+            let result = await response.json();
+
+            if(result.status === "success"){
+
+                showToast(
+                    "✅ Party Deleted",
+                    "#27ae60"
+                );
+
+                setTimeout(() => {
+
+                    location.reload();
+
+                },1000);
+
+            }else{
+
+                showToast(
+                    "❌ " + result.message,
+                    "#e74c3c"
+                );
+            }
+        }
+
+        function loadSchoolList() {
+
+            let tbody = document.getElementById(
+                "schoolListBody"
+            );
+
+            tbody.innerHTML = "";
+
+            schoolList.forEach(name => {
+
+                tbody.innerHTML += `
+
+                    <tr onclick="selectSchoolRow(
+                        '${name}'
+                    )"
+
+                    style="
+                        cursor:pointer;
+                        border-bottom:1px solid #eee;
+                    ">
+
+                        <td style="padding:8px;">
+                            ${name}
+                        </td>
+
+                    </tr>
+                `;
+            });
+        }
+
+        function selectSchoolRow(name) {
+
+            document.getElementById(
+                "editingSchoolId"
+            ).value = name;
+
+            document.getElementById(
+                "newSchool"
+            ).value = name;
+        }
+
+        function filterSchoolList() {
+
+            let search = document
+                .getElementById("schoolSearch")
+                .value
+                .toLowerCase();
+
+            let rows = document.querySelectorAll(
+                "#schoolListBody tr"
+            );
+
+            rows.forEach(row => {
+
+                if(
+                    row.innerText
+                        .toLowerCase()
+                        .includes(search)
+                ){
+
+                    row.style.display = "";
+
+                } else {
+
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        async function updateSchool() {
+
+            let oldName = document
+                .getElementById("editingSchoolId")
+                .value;
+
+            let newName = document
+                .getElementById("newSchool")
+                .value;
+
+            if(!oldName){
+
+                showToast(
+                    "Select School First",
+                    "#e74c3c"
+                );
+
+                return;
+            }
+
+            let response = await fetch(
+                "/update_school",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        old_name:oldName,
+
+                        new_name:newName
+                    })
+                }
+            );
+
+            let result = await response.json();
+
+            if(result.status === "success"){
+
+                showToast(
+                    "✅ School Updated",
+                    "#27ae60"
+                );
+
+                setTimeout(() => {
+
+                    location.reload();
+
+                },1000);
+            }
+        }
+
+        async function deleteSchool() {
+
+            let schoolName = document
+                .getElementById("editingSchoolId")
+                .value;
+
+            if(!schoolName){
+
+                showToast(
+                    "Select School First",
+                    "#e74c3c"
+                );
+
+                return;
+            }
+
+            if(!confirm(
+                "Delete this school?"
+            )) return;
+
+            let response = await fetch(
+                "/delete_school",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        school_name:schoolName
+                    })
+                }
+            );
+
+            let result = await response.json();
+
+            if(result.status === "success"){
+
+                showToast(
+                    "✅ School Deleted",
+                    "#27ae60"
+                );
+
+                setTimeout(() => {
+
+                    location.reload();
+
+                },1000);
+
+            }else{
+
+                showToast(
+                    "❌ " + result.message,
+                    "#e74c3c"
+                );
+            }
+        }
+
+        function loadClothList() {
+
+            let tbody = document.getElementById(
+                "clothListBody"
+            );
+
+            tbody.innerHTML = "";
+
+            clothList.forEach(name => {
+
+                tbody.innerHTML += `
+
+                    <tr onclick="selectClothRow(
+                        '${name}'
+                    )"
+
+                    style="
+                        cursor:pointer;
+                        border-bottom:1px solid #eee;
+                    ">
+
+                        <td style="padding:8px;">
+                            ${name}
+                        </td>
+
+                    </tr>
+                `;
+            });
+        }
+
+        function selectClothRow(name) {
+
+            document.getElementById(
+                "editingClothId"
+            ).value = name;
+
+            document.getElementById(
+                "newCloth"
+            ).value = name;
+        }
+
+        function filterClothList() {
+
+            let search = document
+                .getElementById("clothSearch")
+                .value
+                .toLowerCase();
+
+            let rows = document.querySelectorAll(
+                "#clothListBody tr"
+            );
+
+            rows.forEach(row => {
+
+                if(
+                    row.innerText
+                        .toLowerCase()
+                        .includes(search)
+                ){
+
+                    row.style.display = "";
+
+                } else {
+
+                    row.style.display = "none";
+                }
+            });
+        }
+
+        async function updateCloth() {
+
+            let oldName = document
+                .getElementById("editingClothId")
+                .value;
+
+            let newName = document
+                .getElementById("newCloth")
+                .value;
+
+            if(!oldName){
+
+                showToast(
+                    "Select Cloth First",
+                    "#e74c3c"
+                );
+
+                return;
+            }
+
+            let response = await fetch(
+                "/update_cloth",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        old_name:oldName,
+
+                        new_name:newName
+                    })
+                }
+            );
+
+            let result = await response.json();
+
+            if(result.status === "success"){
+
+                showToast(
+                    "✅ Cloth Updated",
+                    "#27ae60"
+                );
+
+                setTimeout(() => {
+
+                    location.reload();
+
+                },1000);
+            }
+        }
+
+        async function deleteCloth() {
+
+            let clothName = document
+                .getElementById("editingClothId")
+                .value;
+
+            if(!clothName){
+
+                showToast(
+                    "Select Cloth First",
+                    "#e74c3c"
+                );
+
+                return;
+            }
+
+            if(!confirm(
+                "Delete this cloth?"
+            )) return;
+
+            let response = await fetch(
+                "/delete_cloth",
+                {
+                    method:"POST",
+
+                    headers:{
+                        "Content-Type":"application/json"
+                    },
+
+                    body:JSON.stringify({
+
+                        cloth_name:clothName
+                    })
+                }
+            );
+
+            let result = await response.json();
+
+            if(result.status === "success"){
+
+                showToast(
+                    "✅ Cloth Deleted",
+                    "#27ae60"
+                );
+
+                setTimeout(() => {
+
+                    location.reload();
+
+                },1000);
+
+            }else{
+
+                showToast(
+                    "❌ " + result.message,
+                    "#e74c3c"
+                );
+            }
+        }
+
+        function toggleTheme(){
+
+            document.body.classList.toggle(
+                "dark-mode"
+            );
+
+            let darkMode = document.body
+                .classList
+                .contains("dark-mode");
+
+            localStorage.setItem(
+                "theme",
+                darkMode ? "dark" : "light"
+            );
+
+            updateThemeButton();
+        }
+
+        function updateThemeButton(){
+
+            let btn = document.getElementById(
+                "themeBtn"
+            );
+
+            if(
+                document.body.classList.contains(
+                    "dark-mode"
+                )
+            ){
+
+                btn.innerHTML = "☀ Light Mode";
+
+            }else{
+
+                btn.innerHTML = "🌙 Dark Mode";
+            }
+        }
+
+        window.addEventListener("load", () => {
+
+            let savedTheme = localStorage.getItem(
+                "theme"
+            );
+
+            if(savedTheme === "dark"){
+
+                document.body.classList.add(
+                    "dark-mode"
+                );
+            }
+
+            updateThemeButton();
+        });
+
+    
+    function selectItemRow(name){
+
+        document.getElementById(
+            "editingItemId"
+        ).value = name;
+
+        document.getElementById(
+            "newItem"
+        ).value = name;
+
+        document.getElementById(
+            "newSizes"
+        ).value = (sizeMap[name] || []).join(",");
+    }
+
+    function filterItemList(){
+
+        let search =
+            document.getElementById(
+                "itemSearch"
+            )
+            .value
+            .toLowerCase();
+
+        let rows =
+            document.querySelectorAll(
+                "#itemListBody tr"
+            );
+
+        rows.forEach(row => {
+
+            if(
+                row.innerText
+                    .toLowerCase()
+                    .includes(search)
+            ){
+
+                row.style.display = "";
+
+            }else{
+
+                row.style.display = "none";
+            }
+        });
+    }
+    
+
 </script>
-    <div id="historyPopup" 
-        style="display:none;
-                position:fixed;
-                top:10%;
-                left:50%;
-                transform:translateX(-50%);
-                background:white;
-                padding:20px;
-                width:300px;
-                border-radius:10px;
-                box-shadow:0 0 10px rgba(0,0,0,0.4);
-                z-index:9999;">
 
-        <div id="popupContent"></div>
 
-        <button onclick="closePopup()">Close</button>
-    </div>
 </body>
 </html>
